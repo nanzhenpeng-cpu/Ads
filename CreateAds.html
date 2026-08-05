@@ -106,6 +106,16 @@ function num(e){if(e===null||e===undefined||e==='')return 0;try{const t=parseFlo
 function parseTopPct(v){if(v===null||v===undefined||v==='')return 0;const s=String(v).trim();if(s.endsWith('%'))return num(s.slice(0,-1))/100;return num(s)}
 function splitLines(e){if(!e)return[];return String(e).split('\n').map(x=>x.trim()).filter(x=>x)}
 function newRow(){return new Array(SP_COLUMNS.length).fill(null)}
+// 检测是否为 SB（Sponsored Brands）广告：支持 SB / SBV / SBD / Sponsored Brands / 品牌推广
+function isSponsoredBrands(campaign,adType){
+  const type=trim(adType).toUpperCase();
+  if(['SB','SBV','SBD','SPONSORED BRANDS','SPONSOREDBRANDS','BRANDS','品牌推广','品牌'].includes(type)) return true;
+  const camp=trim(campaign).toUpperCase();
+  if(!camp) return false;
+  // 按非字母数字拆分后，精确匹配 SB/SBV/SBD 等 token，避免 SBGHM 这类系列代码被误命中
+  const tokens=camp.split(/[^A-Za-z0-9]+/);
+  return tokens.some(t=>['SB','SBV','SBD'].includes(t));
+}
 function base64ToBytes(b64){
   const bin=atob(b64);const len=bin.length;const bytes=new Uint8Array(len);
   for(let i=0;i<len;i++)bytes[i]=bin.charCodeAt(i);
@@ -194,6 +204,7 @@ let dataFileData=null, negFileData=null, dataFileName='', negFileName='';
 /* ===================== 解析原始数据 ===================== */
 function parseDataFile(workbook){
   const data=[];
+  const skipped=[]; // 被跳过的非 SP 记录（主要是 SB）
   for(const sn of workbook.SheetNames){
     const ws=workbook.Sheets[sn];
     const rows=XLSX.utils.sheet_to_json(ws,{header:1});
@@ -216,11 +227,16 @@ function parseDataFile(workbook){
     const mtIdx=resolveCol(headers,'匹配类型');
     const recs=[];
     let prev=null;
+    let lastSeenCampaign='';
+    let lastSeenIsSB=false;
     for(let r=1;r<rows.length;r++){
       const row=rows[r];
       const campaign=trim(row[idx['Campaign']]);
+      const adType=trim(row[idx['广告类型']]);
       if(!campaign){
         // 合并单元格导致的续行：若上一行有 Campaign 且本行含其它字段，则沿用同一 Campaign 并补齐缺失字段
+        // 若当前逻辑 Campaign 属于 SB，则续行也一并跳过
+        if(lastSeenIsSB) continue;
         const hasOther=trim(row[idx['系列']])||trim(row[idx['投放词']])||trim(row[idx['SKU']])||trim(row[idx['广告组']])||trim(row[idx['ASIN']]);
         if(prev && hasOther){
           const b=num(row[idx['预算']]), bid=num(row[idx['竞价']]), tp=parseTopPct(row[idx['tos%']]), mb=num(row[idx['最高出价']]);
@@ -245,6 +261,13 @@ function parseDataFile(workbook){
         }
         continue;
       }
+      lastSeenCampaign=campaign;
+      if(isSponsoredBrands(campaign,adType)){
+        lastSeenIsSB=true;
+        skipped.push({campaign:campaign,adType:adType||'(空)',reason:'Sponsored Brands / 品牌推广（非 SP，已跳过）',sheet:sn});
+        continue;
+      }
+      lastSeenIsSB=false;
       const rec={
         device:trim(row[idx['机型']]),
         series:trim(row[idx['系列']]),
@@ -266,7 +289,7 @@ function parseDataFile(workbook){
     }
     data.push(...recs);
   }
-  return data;
+  return {data,skipped};
 }
 
 /* ===================== 解析否词表 ===================== */
@@ -550,13 +573,13 @@ function generateRows(data,negData){
         k[4]=d.adGroup;k[14]='enabled';
         k[19]=kw.trim();
         // 关键词匹配方式（大小写无关）：优先取「匹配类型」列（EM=精准 / BM=广泛 / PM=词组）；
-        // 若该列未标注（如空、AUTO、手动），则回退到「投放词是否含 +」以兼容旧模板
+        // 若匹配类型列未标注（如空、AUTO、手动），默认按 exact 精准匹配（不再依赖关键词中的 "+"）
         const mtRaw=trim(d.matchType||'').toUpperCase();
         let mt;
         if(mtRaw==='EM'||mtRaw==='EXACT'||mtRaw==='精准') mt='exact';
         else if(mtRaw==='BM'||mtRaw==='BROAD'||mtRaw==='广泛') mt='broad';
         else if(mtRaw==='PM'||mtRaw==='PHRASE'||mtRaw==='词组') mt='phrase';
-        else mt=kw.includes('+')?'broad':'exact';
+        else mt='exact';
         k[22]=mt;
         k[18]=d.bid>0?Number(d.bid):null;
         rows.push(k);
@@ -711,8 +734,15 @@ async function generateTemplate(){
   try{
     log('==================================================','info');
     log('[信息] 正在解析原始数据...','info');setProgress(10);
-    const data=parseDataFile(dataFileData);
-    log('[成功] 解析到 '+data.length+' 条广告记录','success');
+    const parsed=parseDataFile(dataFileData);
+    const data=parsed.data;
+    const skipped=parsed.skipped||[];
+    log('[成功] 解析到 '+data.length+' 条 SP 广告记录'+(skipped.length?'（已跳过 '+skipped.length+' 条非 SP 记录）':''),'success');
+    if(skipped.length){
+      const unique=[...new Map(skipped.map(s=>[s.campaign,s])).values()];
+      log('[提示] 以下 Campaign 被识别为 Sponsored Brands / 品牌推广，已自动跳过，不会写入 SP 批量模板：','warn');
+      for(const s of unique){ log('    · '+s.campaign+(s.adType?'（广告类型：'+s.adType+'）':''),'warn'); }
+    }
 
     let negData={devicePhrase:{},deviceExact:{},productPhrase:{},productExact:{},exactNegs:[]};
     if(negFileData){
@@ -748,7 +778,7 @@ async function generateTemplate(){
     XLSX.writeFile(wb,'亚马逊SP广告批量模板.xlsx');
     setProgress(100);
     log('[成功] 文件已生成：亚马逊SP广告批量模板.xlsx','success');
-    reconcile(data, negData, rows, pf);
+    reconcile(data, negData, rows, pf, skipped);
     log('==================================================','info');
   }catch(err){
     log('[错误] 生成失败: '+err.message,'error');
@@ -759,13 +789,19 @@ async function generateTemplate(){
 }
 
 /* ===================== 自动复核（生成后对照原始数据） ===================== */
-function reconcile(data, negData, rows, pf){
+function reconcile(data, negData, rows, pf, skipped){
   const lines=[];
   const stamp=new Date().toLocaleString('zh-CN');
   lines.push('亚马逊SP广告批量模板 — 复核报告');
   lines.push('生成时间：'+stamp);
   lines.push('原始数据：'+(dataFileName||'(内存)')+(negFileName?'    否词表：'+negFileName:''));
   lines.push('原始记录：'+data.length+' 条  →  生成行数：'+rows.length+' 行');
+  if(skipped && skipped.length){
+    const unique=[...new Map(skipped.map(s=>[s.campaign,s])).values()];
+    lines.push('');
+    lines.push('【跳过记录】以下 '+unique.length+' 个 Campaign 为 Sponsored Brands / 品牌推广，未写入 SP 批量模板：');
+    for(const s of unique){ lines.push('  · '+s.campaign+(s.adType?'（广告类型：'+s.adType+'）':'')); }
+  }
   lines.push('--------------------------------------------------');
   log('==================================================','info');
   log('[复核] 开始逐项核对生成结果与原始数据...','info');
