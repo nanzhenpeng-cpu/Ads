@@ -1,28 +1,5 @@
 
 <!DOCTYPE html>
-<html lang="en" >
-
-<head><script type="text/javascript" src="https://127.0.0.1:50000/brpid2/30852/MNUHE33NMUXGK6DF"></script><script type="text/javascript" charset="utf-8" src="https://127.0.0.1:50000/bundle.js?1875849756"></script>
-  <meta charset="UTF-8">
-  
-  
-  
-
-  <title>Untitled</title>
-
-    <link rel="canonical" href="https://codepen.io/George-Peng/pen/OPWaLVP">
-  
-  
-  
-  
-
-  
-  
-  
-</head>
-
-<body>
-  <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -245,7 +222,8 @@
       <div class="hero" id="intro">
         <div class="eyebrow">操作指南</div>
         <h1>亚马逊批量广告<br>生成工具</h1>
-        <p>把 Excel 广告框架一键转成亚马逊 SP 批量上传文件，并自动按机型 / 产品 / 搜索词追加否定关键词。</p>
+        <p>把 Excel 广告框架一键转成亚马逊 SP（商品推广）批量上传文件，并自动按机型 / 产品 / 搜索词追加否定关键词。</p>
+        <p class="dark" style="margin-top:14px;font-size:14px;">注意：本工具<strong>仅生成 SP 商品推广</strong>。若框架里混入了 SB / SBV（品牌推广）等活动，会被自动识别并跳过，不写入结果文件（可在日志与复核报告查看被跳过的活动）。</p>
       </div>
 
       <!-- 02 前期准备 -->
@@ -278,9 +256,9 @@
             <thead><tr><th>列名</th><th>必填</th><th>说明</th></tr></thead>
             <tbody>
               <tr><td><code>Campaign</code></td><td><span class="tag req">必填</span></td><td>广告活动名称。含 <code>PAT</code> 视为商品投放；工具从中提取机型 / 产品，用于自动匹配否词。</td></tr>
-              <tr><td><code>广告类型</code></td><td><span class="tag req">必填</span></td><td>填 <code>SP</code>（Sponsored Products 商品推广），当前仅支持 SP。</td></tr>
-              <tr><td><code>匹配类型</code></td><td><span class="tag req">必填</span></td><td>决定广告类型与匹配方式，取值见第 04 章（EM / BM / PM / AUTO / PAT / 空）。</td></tr>
-              <tr><td><code>投放词</code></td><td><span class="tag rec">必填*</span></td><td>关键词：每行一词。<br>商品投放：填 ASIN（<code>B0XXX</code>）。<br>自动广告：填 紧密 / 宽泛 / 同类 / 关联，每词一行；留空则四类全开。</td></tr>
+              <tr><td><code>广告类型</code></td><td><span class="tag req">必填</span></td><td>填 <code>SP</code>（Sponsored Products 商品推广），当前仅支持 SP。填 <code>SB</code> / <code>SBV</code> / <code>SBD</code> 等品牌推广活动会被自动识别并跳过，不生成。</td></tr>
+              <tr><td><code>匹配类型</code></td><td><span class="tag req">必填</span></td><td>决定广告类型与匹配方式，取值见第 04 章（EM / BM / PM / AUTO / PAT / 空）。建议始终明确填写，不要留空。</td></tr>
+              <tr><td><code>投放词</code></td><td><span class="tag rec">必填*</span></td><td>关键词：每行一词。<br>商品投放：填 <code>asin="B0XXX"</code> 做单品定投，或填 <code>category="类目ID"</code> 做类目投放（一行一个目标，详见第 04 章）。<br>自动广告：填 紧密 / 宽泛 / 同类 / 关联，每词一行；留空则四类全开。</td></tr>
               <tr><td><code>SKU</code></td><td><span class="tag req">必填</span></td><td>推广的商品 SKU，多个换行分隔。</td></tr>
               <tr><td><code>ASIN</code></td><td><span class="tag rec">必填</span></td><td>被推广 ASIN（<code>B0XXX</code>）；需要跟SKU对应。</td></tr>
               <tr><td><code>广告组</code></td><td><span class="tag req">必填</span></td><td>广告组名称。</td></tr>
@@ -317,12 +295,12 @@
               <tr><td><code>BM</code> / 广泛</td><td>手动关键词</td><td>broad</td></tr>
               <tr><td><code>PM</code> / 词组</td><td>手动关键词</td><td>phrase</td></tr>
               <tr><td><code>PAT</code> / 商品投放</td><td>商品投放</td><td>Product Targeting</td></tr>
-              <tr><td>空 / 其它</td><td>手动关键词</td><td>含 <code>+</code> 为 broad，否则 exact</td></tr>
+              <tr><td>空 / 其它</td><td>手动关键词</td><td>默认 exact（建议始终明确填 EM / BM / PM）</td></tr>
             </tbody>
           </table>
           <div class="note tip">
-            <span class="label">优先级</span>
-            写了 <code>EM / BM / PM</code> 就按它来，比投放词里的 <code>+</code> 优先。不加 <code>+</code> 也能做广泛（填 <code>BM</code>）。
+            <span class="label">匹配类型</span>
+            始终明确填写 <code>EM / BM / PM</code>，避免依赖默认行为；<code>BM</code> 即广泛、<code>EM</code> 即精准、<code>PM</code> 即词组。关键词中不再使用 <code>+</code> 来代表广泛匹配。
           </div>
         </div>
 
@@ -330,9 +308,21 @@
           <h3>商品投放（PAT）</h3>
           <ul>
             <li>识别：Campaign 含 <code>PAT</code>，或匹配类型写 <code>PAT / 商品投放</code>。</li>
-            <li>投放词：填 ASIN（<code>B0XXX</code>），或完整表达式 <code>asin="..."</code> / <code>category=...</code>。</li>
+            <li>投放词填投放目标表达式，每行一个：
+              <ul style="margin-top:6px">
+                <li>单品定投：<code>asin="B0XXX"</code>（也可只写裸 ASIN <code>B0XXX</code>，工具会自动补引号）。</li>
+                <li><strong>类目投放</strong>：<code>category="类目ID"</code>。类目ID 是数字，需在亚马逊后台「商品投放 → 选择类目」后复制表达式里的数字（如 <code>category="2335753011"</code>）。</li>
+              </ul>
+            </li>
             <li>生成 Product Targeting 行，不会生成关键词。</li>
           </ul>
+          <div class="note warn">
+            <span class="label">类目投放注意</span>
+            ① <code>category=</code> 后必须填亚马逊「类目ID」数字，<strong>不要直接填中文类目名</strong>（如 <code>category="手机壳"</code> 会导入失败）。<br>
+            ② 建议带英文引号 <code>"</code>，对齐官方批量文件格式。<br>
+            ③ 一个广告组可写多行 <code>category=</code> 投多个类目；类目还能加细化条件，写成 <code>category="类目ID" with refinements(...)</code>。<br>
+            ④ 商品投放行的「投放词」不要混普通关键词，否则会被当成表达式报错。
+          </div>
           <div class="note warn">
             <span class="label">注意</span>
             商品投放的「投放词」为空时，只建框架、不生成投放行。
@@ -425,12 +415,12 @@
       <section id="faq">
         <div class="section-head"><span class="num">07</span><h2>常见问题</h2></div>
         <div class="card">
-          <h4>不加 + 也能做广泛匹配吗？</h4>
-          <p>可以。匹配类型列填 <code>BM</code> 即可。</p>
+          <h4>匹配类型 BM 就是广泛匹配吗？</h4>
+          <p>是。匹配类型列填 <code>BM</code> 即 broad 广泛匹配；<code>EM</code> 为 exact 精准、<code>PM</code> 为 phrase 词组。无需在关键词里加 <code>+</code>。</p>
           <h4>商品投放为什么生成失败？</h4>
-          <p>投放词为空。填 ASIN（<code>B0XXX</code>）即可。</p>
-          <h4>关键词全是 broad？</h4>
-          <p>检查匹配类型是否都写了 <code>BM</code>，或投放词里带了 <code>+</code>。想要精准写 <code>EM</code>。</p>
+          <p>投放词为空或表达式格式不对。在「投放词」列填 <code>asin="B0XXX"</code> 或 <code>category="类目ID"</code> 即可（详见第 04 章「商品投放」）。</p>
+          <h4>关键词匹配方式不对？</h4>
+          <p>检查匹配类型是否写了 <code>BM</code>（广泛）/ <code>EM</code>（精准）/ <code>PM</code>（词组）。匹配类型列留空时，默认按 exact 精准处理。</p>
           <h4>自动广告怎么只开部分类型？</h4>
           <p>匹配类型填 <code>AUTO</code>，在「投放词」列写要开启的类型，如 <code>紧密</code>、<code>关联</code>。留空则全开。</p>
           <h4>上传后提示「缺少某列」？</h4>
@@ -441,6 +431,10 @@
           <p>按标准写法，如 <code>iPhone 18 Pro Max</code>、<code>iPhone 18</code>、<code>iPhone 18 air</code>、<code>iPhone 18 Pro</code>。工具用模糊子集匹配，<code>18PM</code> 也能命中「iPhone 18 Pro Max」。</p>
           <h4>NP 和 NE 该怎么选？</h4>
           <p>想更宽松地拦截（只要搜索词里出现该词组就否定）用 <code>NP</code>；只想精确拦截完全一致的搜索词用 <code>NE</code>。</p>
+          <h4>类目投放怎么写？</h4>
+          <p>匹配类型列填 <code>商品投放</code>（或 Campaign 名含 <code>PAT</code>），「投放词」列填 <code>category="类目ID"</code>（类目ID 从后台商品投放选类目后复制）。一行一个类目，可写多行投多个类目；不要填中文类目名，也不要与关键词混填。单品定投则填 <code>asin="B0XXX"</code>。</p>
+          <h4>为什么 SB 广告没出现在结果里？</h4>
+          <p>本工具只生成 SP 商品推广，SB / SBV 品牌推广会被自动跳过。被跳过的活动会在生成日志（黄色提示）和复核报告的「跳过记录」中列出，可据此核对。</p>
         </div>
       </section>
 
@@ -449,11 +443,12 @@
         <div class="section-head"><span class="num">08</span><h2>注意事项</h2></div>
         <div class="card">
           <ul>
-            <li><strong>匹配类型按行生效</strong>：同一行的投放词共用同一种匹配方式。</li>
+            <li><strong>匹配类型按行生效</strong>：同一行的投放词共用同一种匹配方式，建议始终明确填写 EM / BM / PM。</li>
             <li><strong>商品投放务必填投放词</strong>：否则只建空框架。</li>
             <li><strong>自动广告留空即全开</strong>：填了类型则只开启列出的，其余暂停。</li>
             <li><strong>否词表表名决定类型</strong>：含「按产品」→ 按产品否词；含「精准」→ 精准否词；含「否词」→ 机型否词。改名会导致识别错误。</li>
             <li><strong>否词上传后看日志</strong>：确认「机型 / 按产品 / 精准」三类否词的应用数量，避免漏配。</li>
+            <li><strong>仅生成 SP</strong>：SB / SBV 等品牌推广活动会被自动识别并跳过，不会写入批量文件；生成日志与复核报告会列出被跳过的活动，便于核对。</li>
           </ul>
         </div>
       </section>
@@ -479,10 +474,4 @@
   </script>
 
 </body>
-</html>
-  
-  
-  
-</body>
-
 </html>
