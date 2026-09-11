@@ -61,9 +61,10 @@ body{font-family:'Microsoft YaHei','PingFang SC',sans-serif;background:#f4f5f7;c
 <a href="#" class="header-link" onclick="showHelp();return false">⍰ 使用说明</a>
 </div>
 <div class="upload-grid">
-<div class="card"><div class="card-title"><span class="badge">1</span>选择广告框架文件</div><div class="form-group"><label>原始数据.xlsx</label><div class="upload-area" id="dataUpload"><svg class="upload-icon" viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#6E8CBF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg><div class="upload-text">点击上传或拖拽文件</div><div class="upload-hint">支持 .xlsx / .xls</div><input type="file" id="dataFile" accept=".xlsx,.xls" style="display:none"><div class="file-info" id="dataFileInfo" style="display:none"><span class="file-name"></span><button type="button" class="file-remove" onclick="clearFile('data')">✕ 删除</button></div></div></div></div>
-<div class="card"><div class="card-title"><span class="badge">2</span>选择否词表文件<span class="tag">可选</span></div><div class="form-group"><label>否词表-New.xlsx</label><div class="upload-area" id="negUpload"><svg class="upload-icon" viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#6E8CBF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg><div class="upload-text">点击上传或拖拽文件</div><div class="upload-hint">支持 .xlsx / .xls</div><input type="file" id="negFile" accept=".xlsx,.xls" style="display:none"><div class="file-info" id="negFileInfo" style="display:none"><span class="file-name"></span><button type="button" class="file-remove" onclick="clearFile('neg')">✕ 删除</button></div></div></div></div>
+<div class="card"><div class="card-title"><span class="badge">1</span>选择广告框架文件</div><div class="form-group"><label>原始数据.xlsx</label><div class="upload-area" id="dataUpload"><svg class="upload-icon" viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#6E8CBF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg><div class="upload-text">点击上传或拖拽文件</div><div class="upload-hint">支持 .xlsx / .xls</div><input type="file" id="dataFile" accept=".xlsx,.xls,.csv" style="display:none"><div class="file-info" id="dataFileInfo" style="display:none"><span class="file-name"></span><button type="button" class="file-remove" onclick="clearFile('data')">✕ 删除</button></div></div></div></div>
+<div class="card"><div class="card-title"><span class="badge">2</span>选择否词表文件<span class="tag">可选</span></div><div class="form-group"><label>否词表-New.xlsx</label><div class="upload-area" id="negUpload"><svg class="upload-icon" viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#6E8CBF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg><div class="upload-text">点击上传或拖拽文件</div><div class="upload-hint">支持 .xlsx / .xls</div><input type="file" id="negFile" accept=".xlsx,.xls,.csv" style="display:none"><div class="file-info" id="negFileInfo" style="display:none"><span class="file-name"></span><button type="button" class="file-remove" onclick="clearFile('neg')">✕ 删除</button></div></div></div></div>
 </div>
+<div class="card"><div class="card-title"><span class="badge">3</span>选择映射表文件<span class="tag">可选</span></div><div class="form-group"><label>映射表.xlsx（也可内嵌在原始/否词文件中）</label><div class="upload-area" id="mapUpload"><svg class="upload-icon" viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#6E8CBF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg><div class="upload-text">点击上传或拖拽文件</div><div class="upload-hint">含「映射表」Sheet 即可（系列/机型规则）</div><input type="file" id="mapFile" accept=".xlsx,.xls,.csv" style="display:none"><div class="file-info" id="mapFileInfo" style="display:none"><span class="file-name"></span><button type="button" class="file-remove" onclick="clearFile('map')">✕ 删除</button></div></div></div></div>
 <div class="card"><button class="btn btn-primary btn-full" id="genBtn" onclick="generateTemplate()">↗ 生成广告模板</button><div class="progress-bar" id="progressBar" style="display:none"><div class="progress" id="progress" style="width:0%"></div></div><div class="tpl-box"><div class="tpl-title">模板下载</div><div class="tpl-btns"><button class="btn btn-ghost" onclick="downloadBlankTemplate()">⬇ 下载广告框架</button><button class="btn btn-ghost" onclick="downloadNegTemplate()">⬇ 下载否词模板</button></div></div><div class="log-title">状态日志</div><div class="log-area" id="logArea"></div></div>
 </div>
 <script id="lib">/*! xlsx.js (C) 2013-present SheetJS -- http://sheetjs.com */
@@ -96,25 +97,102 @@ const MAPPING = [["系列", "简称"], ["巧汇磁吸", "QHCX"], ["巧汇磁吸�
 
 /* ===================== 列定义 ===================== */
 // 输入（原始数据）表头，必须与上传文件一致
-const DATA_COLUMNS = ['机型','系列','广告类型','开始日期','预算','Campaign','广告组','投放词','竞价','tos%','最高出价','ASIN','SKU','否定词(默认NP)','备注（前期均采用固定竞价）'];
+const DATA_COLUMNS = ['机型','系列','广告类型','开始日期','预算','Campaign','广告组','投放词','竞价','tos%','最高出价','ASIN','SKU','否定词(默认NP)','竞价策略','备注（前期均采用固定竞价）'];
 // 输出（空白模板 Sponsored Products Campaigns）表头，必须与空白模板完全一致（含缺失的4列）
 const SP_COLUMNS = ['Product','Entity','Operation','Campaign ID','Ad Group ID','Portfolio ID','Ad ID','Keyword ID','Product Targeting ID','Campaign Name','Ad Group Name','Start Date','End Date','Targeting Type','State','Daily Budget','SKU','Ad Group Default Bid','Bid','Keyword Text','Native Language Keyword','Native Language Locale','Match Type','Bidding Strategy','Placement','Percentage','Product Targeting Expression','Audience ID','Shopper Cohort Percentage','Shopper Cohort Type','Sites'];
 
 /* ===================== 工具函数 ===================== */
 function trim(e){return e===null||e===undefined?'':String(e).trim()}
 function num(e){if(e===null||e===undefined||e==='')return 0;try{const t=parseFloat(e);return isNaN(t)?0:t}catch{return 0}}
-function parseTopPct(v){if(v===null||v===undefined||v==='')return 0;const s=String(v).trim();if(s.endsWith('%'))return num(s.slice(0,-1))/100;return num(s)}
+// 真正的 SKU/ASIN 至少含一个字母或数字；纯中文备注（如误填到 SKU 列的笔记）会被过滤，避免生成垃圾 Product Ad
+function isRealToken(s){return /[A-Za-z0-9]/.test(String(s==null?'':s));}
+function parseTopPct(v){if(v===null||v===undefined||v==='')return 0;const s=String(v).trim();return num(String(s).replace('%',''))/100}
+// 读取并校验 TOS%（顶部加价百分比）：仅接受「数字」或「数字%」；非法则记录错误并定位到单元格
+// formatted = 单元格的格式化文本（Excel 百分比格式：存储值 1、显示 "100%"）。
+// 只看存储值会把 100% 误读成 1%，所以优先用格式化文本。
+function readTopPct(raw, sheet, rowIdx, campaignStr, errArray, formatted){
+  const rawEmpty=(raw===null||raw===undefined||raw==='');
+  const fmtEmpty=(formatted===null||formatted===undefined||String(formatted).trim()==='');
+  if(rawEmpty&&fmtEmpty) return 0;
+  const s=fmtEmpty?String(raw==null?'':raw).trim():String(formatted).trim();
+  const pushErr=(reason)=>{ if(errArray) errArray.push({sheet, row:rowIdx+1, field:'tos%', campaign:campaignStr, reason}); };
+  if(!/^\d+(\.\d+)?%?$/.test(s)){ pushErr('「'+s+'」不是有效的百分比（应为如 50 或 50%）'); return 0; }
+  const hasPct=/%$/.test(s);
+  const n=parseFloat(s.replace('%',''));
+  if(isNaN(n)){ pushErr('「'+s+'」不是数字'); return 0; }
+  if(n<0){ pushErr('「'+s+'」不能为负'); return 0; }
+  if(n>900){ pushErr('「'+s+'」超过亚马逊上限 900%'); return 0; }
+  // 无 % 号且数值在 (0,1) 区间：按小数形式处理（如 0.6 = 60%）
+  if(!hasPct && n>0 && n<1) return n;
+  return n/100;
+}
 function splitLines(e){if(!e)return[];return String(e).split('\n').map(x=>x.trim()).filter(x=>x)}
+// 解析自带否定词数组，按前缀标记拆分为 {phrase:Set, exact:Set}
+// 标记规则（兼容旧模板，无标记默认 NP）：
+//   · 前缀 NE: / NE： → 精准否定(negativeExact)
+//   · 前缀 NP: / NP： → 词组否定(negativePhrase)（显式标注，与无标记等价）
+//   · 无前缀         → 词组否定(negativePhrase)（默认）
+function parseNegatives(arr){
+  const phrase=new Set(), exact=new Set();
+  for(const raw of arr){
+    if(!raw)continue;
+    const m=String(raw).match(/^\s*(NE|NP)\s*[:：]\s*(.+)$/i);
+    if(m){
+      const tag=m[1].toUpperCase();
+      const kw=m[2].trim();
+      if(tag==='NE') exact.add(kw);
+      else phrase.add(kw);
+    }else{
+      phrase.add(raw);
+    }
+  }
+  return {phrase, exact};
+}
 function newRow(){return new Array(SP_COLUMNS.length).fill(null)}
-// 检测是否为 SB（Sponsored Brands）广告：支持 SB / SBV / SBD / Sponsored Brands / 品牌推广
-function isSponsoredBrands(campaign,adType){
-  const type=trim(adType).toUpperCase();
-  if(['SB','SBV','SBD','SPONSORED BRANDS','SPONSOREDBRANDS','BRANDS','品牌推广','品牌'].includes(type)) return true;
+// 广告类型三态校验：SP → 处理；SB/SBV/SBD/SD → 跳过；其他（含空）→ Error
+const SP_TYPES = new Set(['SP','SPONSORED PRODUCTS','商品推广','赞助商产品']);
+const SKIP_TYPES = new Set(['SB','SBV','SBD','SD','SPONSORED BRANDS','BRANDS','品牌推广','品牌','展示型','展示广告','显示广告','DISPLAY']);
+// 广告类型列未填写时，按 Campaign 名 token 回退识别 SB/SBV/SBD/SD（兼容旧模板）
+function adTypeTokensOf(campaign){
   const camp=trim(campaign).toUpperCase();
-  if(!camp) return false;
-  // 按非字母数字拆分后，精确匹配 SB/SBV/SBD 等 token，避免 SBGHM 这类系列代码被误命中
-  const tokens=camp.split(/[^A-Za-z0-9]+/);
-  return tokens.some(t=>['SB','SBV','SBD'].includes(t));
+  if(!camp) return [];
+  return camp.split(/[^A-Za-z0-9]+/).filter(Boolean);
+}
+function classifyAdType(adType,campaign){
+  const t=trim(adType).toUpperCase();
+  if(SP_TYPES.has(t)) return 'SP';
+  if(SKIP_TYPES.has(t)) return 'SKIP';
+  // 非空的 SB/SBV/SBD/SD 变体（如 SBV_Store、SB_Store）也按跳过处理
+  if(adTypeTokensOf(t).some(x=>['SB','SBV','SBD','SD'].includes(x))) return 'SKIP';
+  if(!t){
+    if(adTypeTokensOf(campaign).some(x=>['SB','SBV','SBD','SD'].includes(x))) return 'SKIP';
+    return 'ERROR'; // 空且无法识别 → Error
+  }
+  return 'ERROR';
+}
+// Sponsored Products Campaign 竞价策略映射（亚马逊 bulksheet 标准值）
+// 支持中英文简写；不匹配返回 null（由上层处理：默认 Fixed bid 或报错）
+function normalizeBiddingStrategy(raw){
+  const s=trim(raw==null?'':raw);
+  if(!s)return null;
+  const up=s.toUpperCase();
+  // Fixed bid / 固定竞价
+  if(up==='FIXED BID'||up==='FIXED'||s==='固定竞价'||s==='固定出价'||s==='固定'||up==='FB') return 'Fixed bid';
+  // Dynamic bids - down only / 仅降低 / 只降
+  if(up==='DYNAMIC BIDS - DOWN ONLY'||up==='DOWN ONLY'||up==='DOWN-ONLY'||up==='DOWNONLY'
+    ||s==='仅降低'||s==='只降低'||s==='动态-仅降'||s==='动态仅降'||s==='仅降'||s==='动态只降'||up==='DO'||up==='DYNAMICDOWN') return 'Dynamic bids - down only';
+  // Dynamic bids - up and down / 提高和降低 / 升降
+  if(up==='DYNAMIC BIDS - UP AND DOWN'||up==='UP AND DOWN'||up==='UP-AND-DOWN'||up==='UPANDDOWN'
+    ||s==='提高和降低'||s==='提高与降低'||s==='动态-升降'||s==='动态升降'||s==='可升可降'||s==='升降'||up==='UD'||up==='DYNAMICUPDOWN') return 'Dynamic bids - up and down';
+  // Rule-based bidding / 规则竞价（暂不做完整规则校验，只允许填写标准值；有需要再扩展）
+  if(up==='RULE-BASED BIDDING'||up==='RULE BASED BIDDING'||up==='RULE-BASED'||up==='RULEBASED'
+    ||s==='规则竞价'||s==='规则出价'||s==='基于规则'||up==='RB'||up==='RULE') return 'Rule-based bidding';
+  // 允许直接填写标准值（大小写不敏感）
+  if(/^fixed bid$/i.test(s))return 'Fixed bid';
+  if(/^dynamic bids\s*-\s*down only$/i.test(s))return 'Dynamic bids - down only';
+  if(/^dynamic bids\s*-\s*up and down$/i.test(s))return 'Dynamic bids - up and down';
+  if(/^rule-based bidding$/i.test(s))return 'Rule-based bidding';
+  return null;
 }
 function base64ToBytes(b64){
   const bin=atob(b64);const len=bin.length;const bytes=new Uint8Array(len);
@@ -140,7 +218,8 @@ const COLUMN_ALIASES = {
   'SKU':['SKU'],
   '匹配类型':['匹配类型','Match Type','匹配方式','投放方式','匹配(精准/广泛/词组)','关键词匹配类型'],
   '否定词(默认NP)':['否定词(默认NP)','否定词','否定（仅NP）','否定(仅NP)','否定词（仅NP）','否定词(仅NP)','否定（特别标注）','否定(特别标注)','否定'],
-  '备注（前期均采用固定竞价）':['备注（前期均采用固定竞价）','备注']
+  '竞价策略':['竞价策略','Bid Strategy','Bidding Strategy','竞价方式','出价策略','竞价模式'],
+  '备注（前期均采用固定竞价）':['备注（前期均采用固定竞价）','备注','note','Note']
 };
 // 根据表头数组，解析某个标准列的索引（先精确匹配，再匹配别名；最后大小写/空格容错）
 function resolveCol(headers, canonical){
@@ -148,8 +227,8 @@ function resolveCol(headers, canonical){
   if(i>=0)return i;
   const aliases=COLUMN_ALIASES[canonical]||[];
   for(const a of aliases){ i=headers.indexOf(a); if(i>=0)return i; }
-  // 容错：忽略大小写与首尾空格（先标准名，再别名）
-  const norm=s=>String(s==null?'':s).trim().toLowerCase();
+  // 容错：忽略大小写与所有空格（先标准名，再别名）
+  const norm=s=>String(s==null?'':s).replace(/\s+/g,'').toLowerCase();
   const nc=norm(canonical);
   for(let h=0;h<headers.length;h++){ if(norm(headers[h])===nc)return h; }
   for(const a of aliases){
@@ -184,14 +263,30 @@ function normalizePatExpr(expr){
 function log(msg,type='info'){const area=document.getElementById('logArea');const div=document.createElement('div');div.className=type;div.textContent=msg;area.appendChild(div);area.scrollTop=area.scrollHeight}
 function setProgress(pct){document.getElementById('progressBar').style.display='block';document.getElementById('progress').style.width=pct+'%'}
 function resetProgress(){document.getElementById('progressBar').style.display='none';document.getElementById('progress').style.width='0%'}
-function showHelp(){const help='使用说明：\n1. 上传「原始数据.xlsx / .xls」，包含广告活动、广告组、投放词、ASIN/SKU 等信息。\n2. 否词表为可选项，上传后可按机型/产品自动追加否定关键词（同样支持 .xlsx / .xls）。\n3. 点击「生成广告模板」即可下载基于上传数据填充后的批量文件。\n4. 需要模板时，可在下方「模板下载」分别点击：下载广告框架（与 a模板_终.xlsx 一致）/ 下载否词模板（与 a否词_终.xlsx 一致，含 18/18air/18pro/18pm 机型否词 + 按产品否词 + 精准否词）。';alert(help)}
+function showHelp(){const help='使用说明：\n'+
+'【上传】\n'+
+'1. 广告框架文件（必选）：点击「下载广告框架」得到 广告框架模板.xlsx（沿用之前的模板格式，列头与原始数据一致）。手机膜/平板壳膜/手表壳膜/耳机壳 都填在同一张表里，靠 Campaign 名称里的品类关键字 + 映射表区分，无需单独机型列。\n'+
+'2. 否词表（可选）：点「下载否词模板」得到 否词模板.xlsx。三个区域：① 机型否词子表（sheet 名 = 机型关键词 + "否词"，如 "18pm否词"，只对对应机型 Campaign 生效，机型 = Campaign 名第1、2个 "_" 之间的段）；② 按产品否词（全局，对所有 Campaign 生效）；③ 精准否词（全局精准否定，对所有 Campaign 生效）。三者都加在 Campaign 层级，商品投放(PAT) Campaign 除外。\n'+
+'   · 机型否词按「归一化后精确相等」匹配：18pm → 18promax，所以 "18pm否词" 不会误伤 18 / 18Pro / 18Air 的广告。\n'+
+'   · 否词冲突自动降级：若某否词会否定掉同 Campaign 内某个广告组正在主投的词，该否词改为 Ad Group 层级、只作用于其余广告组（日志会提示）。\n'+
+'3. 映射表（可选，三选一即可，无需重复）：\n'+
+'   · 方式A：在上方「选择映射表文件」单独上传一个含「映射表」Sheet 的 xlsx；\n'+
+'   · 方式B：把「映射表」Sheet 做进你的广告框架文件里（在框架文件末尾加一个「映射表」Sheet 即可）；\n'+
+'   · 方式C：把「映射表」Sheet 做进否词表文件里。\n'+
+'   三者都未提供时，工具使用内置默认（iPhone 系列）。映射表用于把 Campaign 名里的关键字解析成标准系列/机型，支持新品类不必改代码。\n'+
+'4. 点「生成广告模板」→ 若有 ❌ 错误会提示「会导致亚马逊上传失败，请先修正」并停止导出；确认无误点「强制导出」才会继续。\n'+
+'【重要】广告类型列必须填 SP（SB/SBV/SD 自动跳过，其他及空值按 Error 处理）。TOS 填百分比（如 50 或 50% ）。\n'+
+'【合并单元格】会自动展开填充：SKU / 匹配类型 列被合并时，后续广告组不再丢失 SKU、关键词也不会全变成精准。\n'+
+'【匹配类型】本行没填时按「同广告组上一行 → 广告组名（如 DC_BM）→ Campaign 名」自动推断；填 ALL 按广泛(broad)处理。\n'+
+'【否词】Campaign 层级 = 机型+按产品+精准否词（PAT 跳过）；Ad Group 层级 = 自带否词，只对 BM/PM/ALL/AUTO 广告组生效。';alert(help)}
 function clearFile(which){
   if(which==='data'){dataFileData=null;dataFileName='';const f=document.getElementById('dataFile');f.value='';const i=document.getElementById('dataFileInfo');i.style.display='none';i.querySelector('.file-name').textContent='';log('[信息] 已删除已选择的原始数据文件','info');}
+  else if(which==='map'){mapFileData=null;mapFileName='';const f=document.getElementById('mapFile');f.value='';const i=document.getElementById('mapFileInfo');i.style.display='none';i.querySelector('.file-name').textContent='';log('[信息] 已删除已选择的映射表文件','info');}
   else{negFileData=null;negFileName='';const f=document.getElementById('negFile');f.value='';const i=document.getElementById('negFileInfo');i.style.display='none';i.querySelector('.file-name').textContent='';log('[信息] 已删除已选择的否词表文件','info');}
 }
 
 /* ===================== 文件解析 ===================== */
-function parseExcelFile(file){return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=(e)=>{try{const data=new Uint8Array(e.target.result);const workbook=XLSX.read(data,{type:'array'});resolve(workbook)}catch(err){reject(err)}};reader.onerror=reject;reader.readAsArrayBuffer(file)})}
+function parseExcelFile(file){return new Promise((resolve,reject)=>{const isCsv=/\.csv$/i.test(file.name||'');const reader=new FileReader();reader.onload=(e)=>{try{let workbook;if(isCsv){workbook=XLSX.read(e.target.result,{type:'string'});}else{const data=new Uint8Array(e.target.result);workbook=XLSX.read(data,{type:'array'});}resolve(workbook)}catch(err){reject(err)}};reader.onerror=reject;if(isCsv){reader.readAsText(file);}else{reader.readAsArrayBuffer(file);}})}
 
 document.getElementById('dataUpload').addEventListener('click',()=>{document.getElementById('dataFile').click()});
 document.getElementById('dataFile').addEventListener('change',async(e)=>{const file=e.target.files[0];if(!file)return;try{log('[信息] 正在读取原始数据文件: '+file.name,'info');dataFileData=await parseExcelFile(file);dataFileName=file.name;const di=document.getElementById('dataFileInfo');di.querySelector('.file-name').textContent='已选择: '+file.name;di.style.display='block';log('[成功] 原始数据文件读取完成','success')}catch(err){log('[错误] 读取失败: '+err.message,'error');dataFileData=null}});
@@ -199,16 +294,25 @@ document.getElementById('dataFile').addEventListener('change',async(e)=>{const f
 document.getElementById('negUpload').addEventListener('click',()=>{document.getElementById('negFile').click()});
 document.getElementById('negFile').addEventListener('change',async(e)=>{const file=e.target.files[0];if(!file)return;try{log('[信息] 正在读取否词表文件: '+file.name,'info');negFileData=await parseExcelFile(file);negFileName=file.name;const ni=document.getElementById('negFileInfo');ni.querySelector('.file-name').textContent='已选择: '+file.name;ni.style.display='block';log('[成功] 否词表文件读取完成','success')}catch(err){log('[错误] 读取失败: '+err.message,'error');negFileData=null}});
 
-let dataFileData=null, negFileData=null, dataFileName='', negFileName='';
+document.getElementById('mapUpload').addEventListener('click',()=>{document.getElementById('mapFile').click()});
+document.getElementById('mapFile').addEventListener('change',async(e)=>{const file=e.target.files[0];if(!file)return;try{log('[信息] 正在读取映射表文件: '+file.name,'info');mapFileData=await parseExcelFile(file);mapFileName=file.name;const mi=document.getElementById('mapFileInfo');mi.querySelector('.file-name').textContent='已选择: '+file.name;mi.style.display='block';log('[成功] 映射表文件读取完成','success')}catch(err){log('[错误] 读取失败: '+err.message,'error');mapFileData=null}});
+
+let dataFileData=null, negFileData=null, mapFileData=null, dataFileName='', negFileName='', mapFileName='';
 
 /* ===================== 解析原始数据 ===================== */
 function parseDataFile(workbook){
   const data=[];
-  const skipped=[]; // 被跳过的非 SP 记录（主要是 SB）
+  const skipped=[]; // 被跳过的非 SP 记录（SB/SBV/SD 等）
+  const parseErrors=[]; // 解析阶段发现的 Error 级问题（广告类型非法、TOS 格式错误等）
   for(const sn of workbook.SheetNames){
+    if(/映射/.test(sn)) continue; // 「映射表」Sheet 是配置而非数据，跳过解析（仍会被映射加载逻辑读取）
     const ws=workbook.Sheets[sn];
-    const rows=XLSX.utils.sheet_to_json(ws,{header:1});
+    // 合并单元格展开：Excel 合并区域只有左上角有值，不展开会导致「第 2 个广告组没有 SKU」
+    // 「匹配类型为空 → 关键词全部退化成 exact」等问题
+    const mergeCount=(ws['!merges']||[]).length;
+    const rows=expandMerged(ws, XLSX.utils.sheet_to_json(ws,{header:1}));
     if(!rows.length)continue;
+    if(mergeCount) log('[提示] 工作表「'+sn+'」检测到 '+mergeCount+' 处合并单元格，已自动展开填充（否则被合并的行会丢失 SKU / 匹配类型）','info');
     const headers=rows[0].map(h=>trim(h));
     const idx={};
     const missing=[];
@@ -217,7 +321,12 @@ function parseDataFile(workbook){
       if(i>=0)idx[col]=i; else missing.push(col);
     }
     if(missing.length){
-      log('[提示] 工作表「'+sn+'」未识别到列：'+missing.join('、')+'（将按规则自动派生/留空）', missing.includes('Campaign')?'error':'warn');
+      // 旧模板（a模板_终）本就没有「机型」「开始日期」列：机型靠 Campaign 名+映射表解析，开始日期留空(立即开始)。
+      // 这两列属预期缺失，单独友好提示；其余未识别列才按 warn 报警。
+      const known={'机型':'机型将按 Campaign 名称里的关键字 + 上传的映射表解析（平板/手表/耳机等新品类的 Campaign 需含对应关键字，如 IPADPRO11 / WATCHS10 / AIRPODSPRO2）','开始日期':'Start Date 将留空（亚马逊默认立即开始）；如需指定开始日期，请在数据里加一列「开始日期」'};
+      const unexpected=missing.filter(c=>!(c in known));
+      if(unexpected.length) log('[提示] 工作表「'+sn+'」未识别到列：'+unexpected.join('、')+'（将按规则自动派生/留空）', missing.includes('Campaign')?'error':'warn');
+      for(const c of missing){ if(known[c]) log('[提示] 未找到「'+c+'」列：'+known[c],'info'); }
     }
     const recognized=Object.keys(idx).map(c=>c+'←'+headers[idx[c]]);
     if(recognized.length){
@@ -226,90 +335,165 @@ function parseDataFile(workbook){
     if(idx['Campaign']===undefined){log('[错误] 工作表「'+sn+'」缺少 Campaign 列，无法生成，已跳过','error');continue}
     const mtIdx=resolveCol(headers,'匹配类型');
     const recs=[];
+    // 取单元格的格式化文本：Excel 百分比列存储值 1、显示 "100%"，只看存储值会把 100% 读成 1%
+    const cellText=(r,c)=>{ if(c===undefined||c<0)return ''; const cell=ws[XLSX.utils.encode_cell({r:r,c:c})]; if(!cell)return ''; return (cell.w!==undefined&&cell.w!==null)?cell.w:''; };
+    const tosIdx=resolveCol(headers,'tos%');
+    const lastMtByAg={};        // 广告组 → 最近一次非空匹配类型（匹配类型列被合并/留空时继承）
+    const lastSkuByCampaign={}; // Campaign → 最近一次非空 SKU（SKU 列被合并单元格时继承）
+    let mtInherited=0, skuInherited=0;
+    // 匹配类型回退链：本行值 → 同广告组上一行的值 → 广告组名推断（如 DC_BM → BM） → Campaign 名推断
+    const resolveMt=(rowVal, adGroup, campaign)=>{
+      const v=trim(rowVal||'').toUpperCase();
+      if(v)return v;
+      if(adGroup && lastMtByAg[adGroup]) return lastMtByAg[adGroup];
+      const byAg=inferMatchTypeFromName(adGroup);
+      if(byAg)return byAg;
+      return inferMatchTypeFromName(campaign);
+    };
+    // SKU 回退：本行有值用本行；否则沿用同一 Campaign 内最近一次填写的 SKU
+    // （一个 Campaign 的多个广告组通常共用 SKU，SKU 列被合并时后续广告组会漏掉 Product Ad 行）
+    const resolveSku=(rowVal, campaign, rowHadValue)=>{
+      const v=splitLines(rowVal).filter(isRealToken);
+      if(v.length)return v;
+      const inherited=(campaign&&lastSkuByCampaign[campaign])?lastSkuByCampaign[campaign]:[];
+      if(inherited.length)skuInherited++;
+      return inherited;
+    };
+    // 自带否定词回退：只在「同一个广告组内」继承。
+    // 旧逻辑直接继承 prev（上一行记录），会把 DC_BM 特意否的小词顺带给下一个广告组
+    // （如专门投这批小词的广告组），造成「DC_BM 否的词，其他小词广告也被否了」。
+    const lastNegByAg={};
+    const resolveNegs=(rowVal, adGroup)=>{
+      const v=splitLines(rowVal);
+      if(v.length)return v;
+      return (adGroup&&lastNegByAg[adGroup])?lastNegByAg[adGroup]:[];
+    };
     let prev=null;
     let lastSeenCampaign='';
-    let lastSeenIsSB=false;
+    let lastSeenNonSP=false; // 上一行是 SKIP/ERROR 类型，续行（合并单元格）一并跳过
     for(let r=1;r<rows.length;r++){
       const row=rows[r];
       const campaign=trim(row[idx['Campaign']]);
-      const adType=trim(row[idx['广告类型']]);
+      // 广告类型继承：同一产品常在首行（如 DC_EM）填写，其余广告组行（DC_BM / AUTO / FK_BM）留空时从前一行继承，
+      // 避免「明明写了 SP 却报广告类型缺失」的误判。仅当前一行也无可继承时才为空（→ Error）。
+      const adType=trim(row[idx['广告类型']])||(prev?prev.adType:'');
       if(!campaign){
         // 合并单元格导致的续行：若上一行有 Campaign 且本行含其它字段，则沿用同一 Campaign 并补齐缺失字段
         // 若当前逻辑 Campaign 属于 SB，则续行也一并跳过
-        if(lastSeenIsSB) continue;
+        if(lastSeenNonSP) continue;
         const hasOther=trim(row[idx['系列']])||trim(row[idx['投放词']])||trim(row[idx['SKU']])||trim(row[idx['广告组']])||trim(row[idx['ASIN']]);
         if(prev && hasOther){
-          const b=num(row[idx['预算']]), bid=num(row[idx['竞价']]), tp=parseTopPct(row[idx['tos%']]), mb=num(row[idx['最高出价']]);
+          const b=num(row[idx['预算']]), bid=num(row[idx['竞价']]), tp=readTopPct(row[idx['tos%']], sn, r, (prev?prev.campaign:''), parseErrors, cellText(r,tosIdx)), mb=num(row[idx['最高出价']]);
+          const agName=trim(row[idx['广告组']])||prev.adGroup;
+          const rowMt=(mtIdx>=0?trim(row[mtIdx]):'');
+          const mtVal=resolveMt(rowMt, agName, prev.campaign);
+          const skuVal=resolveSku(row[idx['SKU']], prev.campaign);
+          const negVal=resolveNegs(row[idx['否定词(默认NP)']], agName);
+          if(!rowMt && mtVal) mtInherited++;
+          if(mtVal) lastMtByAg[agName]=mtVal;
+          if(skuVal.length) lastSkuByCampaign[prev.campaign]=skuVal;
+          if(negVal.length) lastNegByAg[agName]=negVal;
           const merged={
             device:trim(row[idx['机型']])||prev.device,
             series:trim(row[idx['系列']])||prev.series,
             adType:trim(row[idx['广告类型']])||prev.adType,
-            matchType:(mtIdx>=0?trim(row[mtIdx]):'')||prev.matchType,
+            matchType:mtVal,
             budget:b>0?b:prev.budget,
             campaign:prev.campaign,
-            adGroup:trim(row[idx['广告组']])||prev.adGroup,
+            adGroup:agName,
             keywords:splitLines(row[idx['投放词']]),
             bid:bid>0?bid:prev.bid,
             topPct:tp>0?tp:prev.topPct,
             maxBid:mb>0?mb:prev.maxBid,
-            asin:trim(row[idx['ASIN']])||prev.asin,
-            skuList:splitLines(row[idx['SKU']]),
-            negatives:splitLines(row[idx['否定词(默认NP)']]),
+            asin:(isRealToken(trim(row[idx['ASIN']]))?trim(row[idx['ASIN']]):'')||prev.asin,
+            skuList:skuVal,
+            negatives:negVal,
+            biddingStrategy:(()=>{const v=normalizeBiddingStrategy(row[idx['竞价策略']]);return v!==null?v:prev.biddingStrategy;})(),
+            rawBiddingStrategy:(()=>{const raw=trim(row[idx['竞价策略']]);return raw!==''?raw:prev.rawBiddingStrategy;})(),
             startDate:(row[idx['开始日期']]!==undefined&&row[idx['开始日期']]!==null)?row[idx['开始日期']]:prev.startDate
           };
-          if(merged.keywords.length||merged.skuList.length||merged.adGroup)recs.push(merged);
+          if(merged.keywords.length||merged.skuList.length||merged.adGroup){ recs.push(merged); prev=merged; }
         }
         continue;
       }
       lastSeenCampaign=campaign;
-      if(isSponsoredBrands(campaign,adType)){
-        lastSeenIsSB=true;
-        skipped.push({campaign:campaign,adType:adType||'(空)',reason:'Sponsored Brands / 品牌推广（非 SP，已跳过）',sheet:sn});
+      const cls=classifyAdType(adType,campaign);
+      if(cls==='SKIP'){
+        lastSeenNonSP=true;
+        skipped.push({campaign:campaign,adType:adType||'(空)',reason:'非 SP 广告类型（'+(adType||'(空)')+'），已跳过',sheet:sn});
         continue;
       }
-      lastSeenIsSB=false;
+      if(cls==='ERROR'){
+        lastSeenNonSP=true;
+        if(!parseErrors.some(e=>e.campaign===campaign)){
+          parseErrors.push({campaign:campaign,adType:adType||'(空)',reason:'广告类型「'+(adType||'(空)')+'」不在允许范围（仅 SP 处理；SB/SBV/SD 跳过），请修正',sheet:sn});
+        }
+        continue;
+      }
+      lastSeenNonSP=false;
+      // 广告类型等「Campaign 级」字段：同一产品常只在首行（如 DC_EM）填写，其余广告组行（DC_BM / AUTO / FK_BM）
+      // 的 Campaign 名虽不同，仍属同一产品、广告类型应一致。这里从前一行继承，避免「明明写了 SP 却报广告类型缺失」的误判。
+      // 仅当该行广告类型确实为空、且没有任何前一行可继承时，才判定为缺失（Error）。
+      const agName=trim(row[idx['广告组']]);
+      const rowMt=(mtIdx>=0?trim(row[mtIdx]):'');
+      const mtVal=resolveMt(rowMt, agName, campaign);
+      const skuVal=resolveSku(row[idx['SKU']], campaign);
+      if(!rowMt && mtVal) mtInherited++;
+      if(mtVal) lastMtByAg[agName]=mtVal;
+      const negVal=resolveNegs(row[idx['否定词(默认NP)']], agName);
+      if(skuVal.length) lastSkuByCampaign[campaign]=skuVal;
+      if(negVal.length) lastNegByAg[agName]=negVal;
       const rec={
         device:trim(row[idx['机型']]),
-        series:trim(row[idx['系列']]),
-        adType:trim(row[idx['广告类型']]),
-        matchType:mtIdx>=0?trim(row[mtIdx]):'',
-        budget:num(row[idx['预算']]),
+        series:trim(row[idx['系列']])||(prev?prev.series:''),
+        adType:adType,
+        matchType:mtVal,
+        budget:num(row[idx['预算']])||(prev?prev.budget:0),
         campaign:campaign,
-        adGroup:trim(row[idx['广告组']]),
+        adGroup:agName,
         keywords:splitLines(row[idx['投放词']]),
         bid:num(row[idx['竞价']]),
-        topPct:parseTopPct(row[idx['tos%']]),
+        topPct:readTopPct(row[idx['tos%']], sn, r, campaign, parseErrors, cellText(r,tosIdx)),
         maxBid:num(row[idx['最高出价']]),
-        asin:trim(row[idx['ASIN']]),
-        skuList:splitLines(row[idx['SKU']]),
-        negatives:splitLines(row[idx['否定词(默认NP)']]),
-        startDate:row[idx['开始日期']]
+        asin:(isRealToken(trim(row[idx['ASIN']]))?trim(row[idx['ASIN']]):'')||(prev?prev.asin:''),
+        skuList:skuVal,
+        negatives:negVal,
+        biddingStrategy:normalizeBiddingStrategy(row[idx['竞价策略']]),  // null = 未填写 → 后续默认 Fixed bid
+        rawBiddingStrategy:trim(row[idx['竞价策略']]),
+        startDate:row[idx['开始日期']]!==undefined&&row[idx['开始日期']]!==null?row[idx['开始日期']]:(prev?prev.startDate:undefined)
       };
       recs.push(rec); prev=rec;
     }
+    if(mtInherited) log('[提示] 工作表「'+sn+'」有 '+mtInherited+' 行未填写「匹配类型」：已按「同广告组上一行 → 广告组名（如 DC_BM → BM）→ Campaign 名」自动补全，避免关键词被默认成精准匹配(exact)','info');
+    if(skuInherited) log('[提示] 工作表「'+sn+'」有 '+skuInherited+' 行未填写「SKU」：已沿用同一 Campaign 内最近填写的 SKU，避免后续广告组漏生成 Product Ad 行','info');
     data.push(...recs);
   }
-  return {data,skipped};
+  return {data,skipped,parseErrors};
 }
 
 /* ===================== 解析否词表 ===================== */
 function parseNegFile(workbook){
   // NP = 词组否定(negativePhrase)；NE = 精准否定(negativeExact)
-  const devicePhrase={},deviceExact={},productPhrase={},productExact={},exactNegs=[];
+  // 机型否词子表：机型关键词写在 sheet 名里（如 "18pm否词" → 机型 "18pm"），只对对应机型 Campaign 生效
+  // 按产品否词：全局生效（忽略表头产品代码，所有词应用到全部 Campaign）
+  // 精准否词：全局精准否定（negativeExact）
+  const devicePhrase={},deviceExact={},productPhrase=[],productExact=[],exactNegs=[];
   for(const sn of workbook.SheetNames){
     const ws=workbook.Sheets[sn];
-    const rows=XLSX.utils.sheet_to_json(ws,{header:1});
+    const rows=expandMerged(ws, XLSX.utils.sheet_to_json(ws,{header:1}));
     if(!rows.length)continue;
     if(sn.includes('按产品')){
-      const products=rows[0].slice(1).map(p=>trim(p));
+      // 全局产品否词：逐行收集词 + NP/NE 标记；无标记默认 NP
       for(let r=1;r<rows.length;r++){
         const word=trim(rows[r][0]);
         if(!word)continue;
-        for(let j=0;j<products.length;j++){
-          const tag=trim(rows[r][j+1]).toUpperCase();
-          if(tag==='NP'){ if(!productPhrase[products[j]])productPhrase[products[j]]=[]; productPhrase[products[j]].push(word); }
-          else if(tag==='NE'){ if(!productExact[products[j]])productExact[products[j]]=[]; productExact[products[j]].push(word); }
+        let tagged=false;
+        for(let j=1;j<rows[r].length;j++){
+          const tag=trim(rows[r][j]).toUpperCase();
+          if(tag==='NP'){ productPhrase.push(word); tagged=true; }
+          else if(tag==='NE'){ productExact.push(word); tagged=true; }
         }
+        if(!tagged) productPhrase.push(word);
       }
     }else if(sn.includes('精准')){
       for(let r=1;r<rows.length;r++){
@@ -317,7 +501,9 @@ function parseNegFile(workbook){
         if(word&&trim(rows[r][1]).toUpperCase()==='NE')exactNegs.push(word);
       }
     }else if(sn.toLowerCase().includes('否词')){
-      const deviceName=trim(rows[0][1]);
+      // 机型否词：机型标识 = sheet 名去掉"否词"（如 "18pm否词" → "18pm"）
+      let deviceName=trim(sn.replace(/否词/gi,'')).toLowerCase();
+      if(!deviceName) deviceName=trim(rows[0][1]).toLowerCase();  // 兜底：sheet 名不含机型时读 B1
       if(deviceName){
         devicePhrase[deviceName]=devicePhrase[deviceName]||[];
         deviceExact[deviceName]=deviceExact[deviceName]||[];
@@ -325,63 +511,196 @@ function parseNegFile(workbook){
           const word=trim(rows[r][0]);
           if(!word)continue;
           const tag=trim(rows[r][1]).toUpperCase();
-          if(tag==='NP')devicePhrase[deviceName].push(word);
-          else if(tag==='NE')deviceExact[deviceName].push(word);
+          if(tag==='NE')deviceExact[deviceName].push(word);
+          else devicePhrase[deviceName].push(word);  // 无标记/非NE默认 NP
         }
       }
     }
   }
+  // 诊断日志：把「否词表子表名 → 归一化机型」打出来，方便一眼确认否词表与 Campaign 是否对应得上。
+  // 例：18pm否词 → 18promax、18pro否词 → 18pro（两者互不干扰，不会再出现 18PM 跑出 Pro/ProMax 否词）
+  const devKeys=[...new Set([...Object.keys(devicePhrase),...Object.keys(deviceExact)])];
+  if(devKeys.length){
+    log('[否词表] 机型否词子表：'+devKeys.map(k=>'「'+k+'」→'+canonicalDevice(k)).join('，'),'info');
+  }
   return {devicePhrase,deviceExact,productPhrase,productExact,exactNegs};
 }
 
-/* ===================== 由广告名推导系列 / 机型 ===================== */
-// 按简称长度降序排列，避免短代码误匹配（如 MH 误中 MHCX）
-const MAPPING_SORTED=MAPPING.slice().sort((a,b)=>b[1].length-a[1].length);
+/* ===================== 映射配置（系列/机型，配置驱动，可由「映射表」Sheet 覆盖） ===================== */
+// 内置默认：与原 MAPPING 一致；仅当上传文件不含「映射表」Sheet 时生效
+let SERIES_LIST = MAPPING;            // [[系列全称, 简称], ...]
+let DEVICE_MODE = 'regex';            // 'regex' = 内置 iPhone 正则；'config' = 映射表关键字
+let DEVICE_RULES = [];                // [[关键字, 标准机型名], ...] 当 DEVICE_MODE==='config'
+let SERIES_LIST_SORTED, SERIES_TO_CODE={}, CODE_TO_SERIES={};
+
+function rebuildSeriesIndex(){
+  SERIES_LIST_SORTED = SERIES_LIST.slice().sort((a,b)=>b[1].length-a[1].length);
+  SERIES_TO_CODE={}; CODE_TO_SERIES={};
+  for(const m of SERIES_LIST){
+    const s=trim(m[0]), c=trim(m[1]);
+    if(s)SERIES_TO_CODE[s]=c;
+    if(c)CODE_TO_SERIES[c]=s;
+  }
+}
+rebuildSeriesIndex();
+
+// 上传文件若含「映射表」Sheet（列：类型 / 键 / 值），则用它覆盖内置默认，实现配置驱动、不写死
+function resetMappingToDefault(){ SERIES_LIST=MAPPING; DEVICE_MODE='regex'; DEVICE_RULES=[]; rebuildSeriesIndex(); }
+function loadMappingFromWorkbooks(workbooks){
+  let found=false; const series=[], device=[];
+  for(const wb of (workbooks||[])){
+    if(!wb||!wb.SheetNames) continue;
+    for(const sn of wb.SheetNames){
+      if(!/映射/.test(sn)) continue;
+      const rows=XLSX.utils.sheet_to_json(wb.Sheets[sn],{header:1});
+      for(const row of rows){
+        if(!row||row.length<3) continue;
+        const type=trim(row[0]), key=trim(row[1]), val=trim(row[2]);
+        if(!type||!key||!val) continue;
+        // 统一约定：键=Campaign 名里出现的关键字（代码），值=解析后输出的标准名。
+        // 机型原本就是 [键,值]=[关键字,标准名]；系列此前写反了（[键,值]=[标准名,关键字]），
+        // 这里改为 [val,key]，使系列与机型、与默认 MAPPING([系列全称,简称]) 的存储顺序一致：m[0]=标准名(输出), m[1]=关键字(搜索)。
+        if(type==='系列'||type==='series') series.push([val,key]);
+        else if(type==='机型'||type==='device') device.push([key,val]);
+      }
+      found=true;
+    }
+  }
+  if(found){
+    if(series.length){ SERIES_LIST=[['系列','简称'],...series]; rebuildSeriesIndex(); }
+    if(device.length){ DEVICE_MODE='config'; DEVICE_RULES=device; }
+    log('[映射表] 已从上传文件加载配置：系列 '+series.length+' 条、机型 '+device.length+' 条','success');
+  } else {
+    log('[映射表] 未检测到「映射表」Sheet，使用内置默认映射（iPhone 系列）','info');
+  }
+  return found;
+}
+
 function getSeries(campaign){
-  for(const m of MAPPING_SORTED){
+  for(const m of SERIES_LIST_SORTED){
     if(campaign.includes(m[1]))return m[0];
   }
   return '';
 }
 function getDevice(campaign){
-  // 顺序很重要：Pro Max / PM 必须排在 Pro / 普通之前，否则会被更短的模式提前命中
-  const patterns=[
-    [/iPhone\s*1[0-9]\s*Pro\s*Max/i,'iPhone $1 Pro Max'],
-    [/iPhone\s*1[0-9]\s*PM/i,        'iPhone $1 Pro Max'],
-    [/iPhone\s*1[0-9]\s*Pro/i,       'iPhone $1 Pro'],
-    [/iPhone\s*1[0-9]\s*Air/i,       'iPhone $1 air'],
-    [/iPhone\s*1[0-9]\s*Plus/i,      'iPhone $1 Plus'],
-    [/iPhone\s*1[0-9]\s*e\b/i,       'iPhone $1e'],
-    [/iPhone\s*1[0-9]/i,             'iPhone $1']
-  ];
-  for(const[p,tpl]of patterns){
-    const m=campaign.match(p);
-    if(m){
-      const num=m[0].match(/1[0-9]/);
-      if(num) return tpl.replace('$1',num[0]);
+  // 机型 = Campaign 名第 1 个 "_" 与第 2 个 "_" 之间的段（其余位置出现的机型字样不是机型）。
+  // 例：SPP_iPhone18PM_YPSJTM_SP_JTC_EM/BM_18PM/18Pro → iPhone18PM（末尾的 18PM/18Pro 不是机型）
+  const s=trim(campaign);
+  if(!s) return '';
+  const parts=s.split('_');
+  const seg=parts.length>1 ? trim(parts[1]) : '';
+  if(looksLikeDevice(seg)) return seg;
+  // 第 2 段不是机型（命名不规范）时，向后扫描其余下划线段，取第一个像机型的段
+  for(let i=2;i<parts.length;i++){
+    const p=trim(parts[i]);
+    if(looksLikeDevice(p)) return p;
+  }
+  // 再兜底：整名按非字母数字切词，取第一个「数字开头」的机型词（兼容无下划线的命名）
+  for(const t of s.split(/[^A-Za-z0-9]+/)){
+    if(looksLikeDevice(t)) return t;
+  }
+  return seg;
+}
+/* —— 机型名归一化 ——
+   把各种写法统一成同一串：iPhone 18 Pro Max / 18 pro max / 18PM / iPhone18PM  →  "18promax"
+   旧逻辑用 endsWith 模糊匹配，"18pro" 会误命中 "18promax"，导致 18PM 的广告跑出 Pro/ProMax 的否词。
+   改为归一化后精确相等。 */
+const DEVICE_SUFFIX_RULES=[
+  [/^(promax|pro max|pm)$/,'promax'],
+  [/^(pro|pros)$/,'pro'],
+  [/^(air)$/,'air'],
+  [/^(plus)$/,'plus'],
+  [/^(mini)$/,'mini'],
+  [/^(max)$/,'max'],
+  [/^(se|e)$/,'$1']
+];
+function canonicalDevice(s){
+  let t=String(s==null?'':s).toLowerCase().replace(/[^a-z0-9]/g,'');
+  if(!t)return '';
+  t=t.replace(/^iphone/,'').replace(/^apple/,'').replace(/^ipad/,'');
+  if(!t)return '';
+  const m=t.match(/^(\d{1,2})(.*)$/);
+  if(!m)return t;
+  const num=m[1]; let suf=m[2];
+  if(!suf)return num;
+  for(const rule of DEVICE_SUFFIX_RULES){
+    if(rule[0].test(suf)){ suf=(rule[1]==='$1'?suf:rule[1]); break; }
+  }
+  return num+suf;
+}
+// 该字符串是否「像一个机型」：归一化后须以数字开头（排除 YPSJTM / DC_EM / 巧汇 这类系列或广告组片段）
+function looksLikeDevice(s){ const c=canonicalDevice(s); return !!c && /^\d/.test(c); }
+// 判断否词表机型关键词(deviceName)是否适用于广告机型段(device)：归一化后精确相等
+function deviceNameFits(deviceName,device){
+  const key=canonicalDevice(deviceName), seg=canonicalDevice(device);
+  if(!key||!seg)return false;
+  return key===seg;
+}
+
+/* —— 合并单元格展开 ——
+   Excel 合并单元格只有左上角有值，读取后其余行为空，会导致「第二个广告组没有 SKU」
+   「匹配类型为空→关键词全变 exact」等问题。这里按 !merges 把值回填到区域内所有单元格。 */
+function expandMerged(ws, rows){
+  const merges=ws && ws['!merges'];
+  if(!merges||!merges.length)return rows;
+  for(const m of merges){
+    if(!m||!m.s||!m.e)continue;
+    const src=rows[m.s.r];
+    const v=src?src[m.s.c]:undefined;
+    if(v===undefined||v===null||v==='')continue;
+    for(let r=m.s.r;r<=m.e.r;r++){
+      if(!rows[r])rows[r]=[];
+      for(let c=m.s.c;c<=m.e.c;c++)rows[r][c]=v;
     }
   }
-  return '';
+  return rows;
 }
-// 把机型名拆成小写 token 集合（用于机型否词表的模糊匹配）
-function getDeviceTokens(s){
-  return String(s||'').toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
+
+/* —— 匹配类型：由广告组名 / Campaign 名推断 ——
+   匹配类型列被合并单元格或留空时，用名字里带的 EM/BM/PM/AUTO/PAT 还原，避免整组关键词退化成 exact。
+   名字里同时出现多种（如 "JTC_EM/BM"）则无法判定，返回空串，交由「同广告组上一行继承」处理。 */
+function inferMatchTypeFromName(name){
+  const raw=String(name==null?'':name);
+  const up=raw.toUpperCase();
+  if(!up)return '';
+  if(hasMtToken(up,'AUTO')||/自动/.test(raw))return 'AUTO';
+  if(hasMtToken(up,'PAT')||/商品投放|产品投放|定投/.test(raw))return 'PAT';
+  const hits=[];
+  if(hasMtToken(up,'EM')||/精准|精确/.test(raw))hits.push('EM');
+  if(hasMtToken(up,'BM')||/广泛/.test(raw))hits.push('BM');
+  if(hasMtToken(up,'PM')||/词组/.test(raw))hits.push('PM');
+  if(hits.length===1)return hits[0];
+  return '';   // 同时出现多种（如 "JTC_EM/BM"）无法判定，交给「同广告组上一行继承」
 }
-// 判断否词表机型名(deviceName)是否适用于广告机型(device)：
-// deviceName 的所有 token 都是 device 的 token 子集（即 deviceName 是 device 的细化/同向命名）
-function deviceNameFits(deviceName,device){
-  const nt=getDeviceTokens(deviceName), dt=getDeviceTokens(device);
-  if(nt.length===0||dt.length===0)return false;
-  return nt.every(t=>dt.includes(t));
+// 在大写串里查找独立的标记词。注意不能用 \b：下划线属于 \w，
+// \bBM\b 匹配不到 "DC_BM" 里的 BM，会导致无法从 Campaign 名推断匹配类型。
+function hasMtToken(up,tok){
+  return new RegExp('(^|[^A-Z0-9])'+tok+'(?![A-Z0-9])').test(up);
+}
+// 广告组是否需要加「自带否定词」：AUTO / BM / PM / ALL 需要；PAT 明确不要；EM 不要
+const MT_NEED_NEG=new Set(['BM','BROAD','广泛','PM','PHRASE','词组','ALL','全部','所有']);
+const MT_SKIP_NEG=new Set(['PAT','商品投放','PT','产品投放']);
+function agNeedsNegs(mtSet, isAutoCampaign, isPatCampaign){
+  const set=mtSet||new Set();
+  if(set.has('AUTO')||set.has('自动'))return true;
+  for(const m of MT_SKIP_NEG) if(set.has(m)) return false;
+  for(const m of MT_NEED_NEG) if(set.has(m)) return true;
+  if(isPatCampaign)return false;
+  if(isAutoCampaign)return true;
+  return false;
+}
+// 关键词匹配类型：EM/BM/PM → exact/broad/phrase；ALL 及混合写法（如 "EM/BM"）按 broad 处理
+// 混合时取 broad 是刻意的：广泛覆盖面最大，宁可多跑量也不要把该跑的词锁死在精准上。
+function kwMatchTypeOf(mtRaw){
+  const t=String(mtRaw==null?'':mtRaw).trim().toUpperCase();
+  if(!t) return 'exact';
+  if(hasMtToken(t,'BM')||/广泛/.test(t)||hasMtToken(t,'ALL')||/全部|所有/.test(t))return 'broad';
+  if(hasMtToken(t,'PM')||/词组/.test(t))return 'phrase';
+  if(hasMtToken(t,'EM')||/精准|精确/.test(t))return 'exact';
+  return 'exact';
 }
 
 /* 系列(全称) ↔ 简称 双向映射，用于否词“按产品”匹配时同时支持“全称”与“简称/代码” */
-const SERIES_TO_CODE={}, CODE_TO_SERIES={};
-for(const m of MAPPING){
-  const s=trim(m[0]), c=trim(m[1]);
-  if(s)SERIES_TO_CODE[s]=c;
-  if(c)CODE_TO_SERIES[c]=s;
-}
 // 返回某一系列名的所有别名（小写）：自身 + 对应简称 + 对应全称
 function seriesAliases(series){
   const s=trim(series).toLowerCase();
@@ -393,8 +712,7 @@ function seriesAliases(series){
 /* 由 Campaign 名称 + 系列 推导一组“可匹配否词表按产品表头”的键（小写）。
    支持两种写法：
    ① 表头填“简称/代码”（如 TJCXJTZJ）→ 直接按 Campaign 中下划线分隔的 token 命中；
-   ② 表头填“系列全称”（如 铁甲磁吸镜头支架）→ 通过 seriesAliases 命中。
-   用 token 命中可避免短代码被长代码包含造成的误匹配（如 TJCX 不会误中 TJCXJTZJ）。 */
+   ② 表头填“系列全称”（如 铁甲磁吸镜头支架）→ 通过 seriesAliases 命中。 */
 function campaignMatchKeys(campaign,series){
   const keys=new Set();
   if(campaign)for(const t of String(campaign).split(/[^A-Za-z0-9]+/)){if(t)keys.add(t.toLowerCase());}
@@ -459,8 +777,97 @@ function parseAutoTargetEntries(keywords, defaultBid){
   return out;
 }
 
+/* ===================== 否词计划（生成与复核共用，保证两边完全一致） =====================
+   返回：
+     campPhrase / campExact  —— 下在 Campaign 层级的否词
+     agPhrase / agExact      —— 下在各 Ad Group 层级的否词（自带否定词 + 冲突降级下来的）
+     demoted / conflictOf    —— 冲突降级的词及其会被误伤的广告组（用于日志提示）
+   规则要点：
+     1. 商品投放(PAT) Campaign 不加任何关键词否词。
+     2. 否词若会否定掉本 Campaign 内某个广告组正在主投的词 → 降级为 Ad Group 层级，只作用于其余广告组。
+     3. 自带否定词只归属本广告组（不再跨广告组继承），且只在 BM/PM/ALL/AUTO 广告组生效。 */
+function buildNegPlan(recs, campaign, device, isPat, isAuto, negData){
+  const nd=negData||{devicePhrase:{},deviceExact:{},productPhrase:[],productExact:[],exactNegs:[]};
+  // —— 冲突检测用：广告组 → 实际会生成的关键词行（自动/PAT 不生成关键词行，天然不冲突）——
+  const agKeywords=Object.create(null);
+  if(!isAuto && !isPat){
+    for(const d of recs){
+      const ag=d.adGroup; if(!ag)continue;
+      if(!agKeywords[ag])agKeywords[ag]=new Set();
+      for(const kw of (d.keywords||[])){
+        const k=trim(kw); if(!k||isAutoTargetWord(k))continue;
+        agKeywords[ag].add(k.toLowerCase());
+      }
+    }
+  }
+  // —— Campaign 层级候选否词 ——
+  const campPhrase=new Set(), campExact=new Set();
+  if(!isPat){
+    if(device){
+      for(const name in nd.devicePhrase){ if(deviceNameFits(name,device)) (nd.devicePhrase[name]||[]).forEach(n=>{if(n)campPhrase.add(n)}); }
+      for(const name in nd.deviceExact){ if(deviceNameFits(name,device)) (nd.deviceExact[name]||[]).forEach(n=>{if(n)campExact.add(n)}); }
+    }
+    for(const n of (nd.productPhrase||[])) if(n) campPhrase.add(n);
+    for(const n of (nd.productExact||[])) if(n) campExact.add(n);
+    for(const n of (nd.exactNegs||[]))     if(n) campExact.add(n);
+  }
+  // 否词是否会否定掉某个关键词：NE = 完全相等；NP = 按词序整词包含
+  const blocks=(n,kw,isExact)=>{
+    const a=String(n==null?'':n).toLowerCase().trim(), b=String(kw==null?'':kw).toLowerCase().trim();
+    if(!a||!b)return false;
+    if(isExact)return a===b;
+    const aw=a.split(/\s+/), bw=b.split(/\s+/);
+    if(aw.length===1)return bw.indexOf(aw[0])>=0;
+    for(let i=0;i+aw.length<=bw.length;i++){
+      let ok=true;
+      for(let j=0;j<aw.length;j++){ if(bw[i+j]!==aw[j]){ok=false;break;} }
+      if(ok)return true;
+    }
+    return false;
+  };
+  const conflictOf=new Map();
+  const mark=(n,ag)=>{ if(!conflictOf.has(n))conflictOf.set(n,new Set()); conflictOf.get(n).add(ag); };
+  for(const n of campPhrase) for(const ag in agKeywords){ for(const kw of agKeywords[ag]){ if(blocks(n,kw,false)){ mark(n,ag); break; } } }
+  for(const n of campExact)  for(const ag in agKeywords){ for(const kw of agKeywords[ag]){ if(blocks(n,kw,true )){ mark(n,ag); break; } } }
+  const outCampPhrase=[], outCampExact=[], demoted=[];
+  for(const n of campPhrase){ if(conflictOf.has(n)) demoted.push({word:n,mt:'negativePhrase'}); else outCampPhrase.push(n); }
+  for(const n of campExact){  if(conflictOf.has(n)) demoted.push({word:n,mt:'negativeExact'});  else outCampExact.push(n); }
+
+  // —— Ad Group 层级：匹配类型集合 + 自带否定词 + 降级否词 ——
+  const agOrder=[], agSeen=Object.create(null), agMatchType=Object.create(null);
+  for(const d of recs){
+    const ag=d.adGroup;
+    if(!(ag in agSeen)){ agSeen[ag]=true; agOrder.push(ag); }
+    const mtRaw=trim(d.matchType||'').toUpperCase();
+    if(mtRaw){
+      if(!agMatchType[ag])agMatchType[ag]=new Set();
+      // 支持 "EM/BM" 这类混合写法：拆成集合，只要含 BM/PM/ALL 就该加否词
+      for(const t of mtRaw.split(/[^A-Za-z0-9\u4e00-\u9fa5]+/)) if(t) agMatchType[ag].add(t);
+    }
+  }
+  const agPhrase=Object.create(null), agExact=Object.create(null);
+  for(const ag of agOrder){
+    const mtSet=agMatchType[ag]||new Set();
+    const p=new Set(), e=new Set();
+    if(agNeedsNegs(mtSet,isAuto,isPat)){
+      for(const d of recs) if(d.adGroup===ag){
+        const parsed=parseNegatives(d.negatives);
+        parsed.phrase.forEach(n=>{if(n)p.add(n)});
+        parsed.exact.forEach(n=>{if(n)e.add(n)});
+      }
+    }
+    for(const it of demoted){
+      if((conflictOf.get(it.word)||new Set()).has(ag)) continue;  // 会被误伤的广告组不加
+      if(it.mt==='negativePhrase') p.add(it.word); else e.add(it.word);
+    }
+    agPhrase[ag]=p; agExact[ag]=e;
+  }
+  return {campPhrase:outCampPhrase, campExact:outCampExact, agPhrase:agPhrase, agExact:agExact,
+          agOrder:agOrder, agMatchType:agMatchType, demoted:demoted, conflictOf:conflictOf, agSeen:agSeen};
+}
+
 /* ===================== 生成行 ===================== */
-function generateRows(data,negData){
+function generateRows(data,negData,parseErrors){
   const {devicePhrase,deviceExact,productPhrase,productExact,exactNegs}=negData;
   const rows=[];
   // 按 Campaign 分组，保持首次出现顺序
@@ -485,23 +892,38 @@ function generateRows(data,negData){
     const campaignUpper=campaign.toUpperCase();
     const hasAuto=matchTypes.includes('AUTO')||matchTypes.includes('自动');
     // 商品投放(PAT)：Campaign 名含 PAT，或匹配类型列显式标注 PAT/商品投放/PT/产品投放
-    const isPat=campaignUpper.includes('PAT')||matchTypes.some(m=>['PAT','商品投放','PT','产品投放'].includes(m));
+    const isPat=campaignUpper.includes('_PAT')||matchTypes.some(m=>['PAT','商品投放','PT','产品投放'].includes(m));
     let isAuto;
     if(isPat)isAuto=false;                       // 商品投放 = 手动(MANUAL)，绝不归为 AUTO
     else if(hasAuto)isAuto=true;                // 显式 AUTO → 自动广告
     else if(matchTypes.length>0)isAuto=false;   // 显式标注 EM/BM/PM/手动 等 → 手动关键词广告
     else isAuto=!hasRealKeywords;                // 未标注 → 投放词为真实关键词即手动；为空或仅含自动类型词即自动（兼容旧模板）
     const maxTop=Math.max(0,...recs.map(r=>r.topPct||0));
+    // —— 竞价策略（Campaign 层级）：取首个非空值；不填默认 Fixed bid；填写非法值时记录告警
+    const rawBidStrat=(rowIdx=>{
+      for(let i=0;i<recs.length;i++){ const v=recs[i].biddingStrategy; if(v) return v;}
+      return null;
+    })();
+    // 校验用户填写格式（填写了但被 normalize 为 null → 非法值）
+    const invalidStratVals=[...new Set(recs.map(r=>{
+      const raw=r.rawBiddingStrategy;
+      if(!raw)return null;
+      return normalizeBiddingStrategy(raw)===null?raw:null;
+    }).filter(Boolean))];
 
     // —— Campaign 行（仅此行填写 Campaign Name / Start Date / Targeting Type / Daily Budget / Bidding Strategy）——
     const c=newRow();
     c[0]='Sponsored Products';c[1]='Campaign';c[2]='Create';c[3]=campaign;c[9]=campaign;
     c[11]=(first.startDate!==undefined&&first.startDate!==null&&first.startDate!=='')?Number(first.startDate):'';c[13]=isAuto?'AUTO':'MANUAL';c[14]='paused';
-    c[15]=first.budget>0?Number(first.budget):null;
-    c[23]='Fixed bid';
+    c[15]=first.budget>0?Math.round(Number(first.budget)):null;
+    c[23]=rawBidStrat||'Fixed bid';
     rows.push(c);
     const campTypeLabel=isPat?'MANUAL 商品投放(PAT)':(isAuto?'AUTO 自动广告':'MANUAL 手动关键词广告');
-    log('  生成 Campaign: '+campaign+'  ('+campTypeLabel+')');
+    log('  生成 Campaign: '+campaign+'  ('+campTypeLabel+')  竞价策略: '+c[23]+(rawBidStrat?'':' (默认)'));
+    if(invalidStratVals.length){
+      parseErrors.push({campaign, adType:'', reason:'竞价策略填写值无法识别（已回退为 Fixed bid）：'+invalidStratVals.join('、')+'。合法值示例：Fixed bid / Dynamic bids - down only / Dynamic bids - up and down 或简写：固定竞价 / 仅降低 / 提高和降低', sheet:''});
+      log('    [警告] 竞价策略填写非法（已默认 Fixed bid）：'+invalidStratVals.join('、'), 'warn');
+    }
     if(isAuto){
       const a=parseAutoTargets(recs.flatMap(r=>r.keywords));
       if(a.specified) log('    [提示] 自动广告：投放词列已识别为自动投放类型（'+[...a.set].join('、')+'），将只开启列出的类型，未列出的自动投放类型会置为「暂停」','info');
@@ -529,6 +951,8 @@ function generateRows(data,negData){
         rows.push(ag);
         log('    生成 Ad Group: '+d.adGroup);
       }
+      // 注：广告组的匹配类型由 buildNegPlan 统一按「集合」计算。
+      // 旧逻辑只取第一行（如 EM），会让「同一广告组混投 EM+BM」整组不加否词。
       for(const sku of d.skuList){
         const key=d.adGroup+'_'+sku;
         if(skuSeen[key])continue;
@@ -572,15 +996,8 @@ function generateRows(data,negData){
         k[0]='Sponsored Products';k[1]='Keyword';k[2]='Create';k[3]=campaign;
         k[4]=d.adGroup;k[14]='enabled';
         k[19]=kw.trim();
-        // 关键词匹配方式（大小写无关）：优先取「匹配类型」列（EM=精准 / BM=广泛 / PM=词组）；
-        // 若匹配类型列未标注（如空、AUTO、手动），默认按 exact 精准匹配（不再依赖关键词中的 "+"）
-        const mtRaw=trim(d.matchType||'').toUpperCase();
-        let mt;
-        if(mtRaw==='EM'||mtRaw==='EXACT'||mtRaw==='精准') mt='exact';
-        else if(mtRaw==='BM'||mtRaw==='BROAD'||mtRaw==='广泛') mt='broad';
-        else if(mtRaw==='PM'||mtRaw==='PHRASE'||mtRaw==='词组') mt='phrase';
-        else mt='exact';
-        k[22]=mt;
+        // 关键词匹配方式：EM=精准 / BM=广泛 / PM=词组 / ALL=按广泛；未标注默认精准
+        k[22]=kwMatchTypeOf(d.matchType);
         k[18]=d.bid>0?Number(d.bid):null;
         rows.push(k);
       }
@@ -613,48 +1030,53 @@ function generateRows(data,negData){
       }
     }
 
-    // —— 否定词（本 Campaign 一次生成）——
-    // negsPhrase: 词组否定(negativePhrase)；negsExact: 精准否定(negativeExact)
-    const negsPhrase=new Set(), negsExact=new Set();
-    for(const d of recs)for(const n of d.negatives)if(n)negsPhrase.add(n);   // 记录自带否定词（默认 NP=词组）
-    if(device){
-      for(const name in devicePhrase){
-        if(deviceNameFits(name,device)){devicePhrase[name].forEach(n=>negsPhrase.add(n));log('    应用机型否词(NP,'+name+'): '+devicePhrase[name].length+'个');}
-      }
-      for(const name in deviceExact){
-        if(deviceNameFits(name,device)){deviceExact[name].forEach(n=>negsExact.add(n));log('    应用机型否词(NE,'+name+'): '+deviceExact[name].length+'个');}
-      }
-    }
-    if(series||campaign){
-      const keys=campaignMatchKeys(campaign,series);
-      for(const name in productPhrase){
-        if(keys.has(trim(name).toLowerCase())){productPhrase[name].forEach(n=>negsPhrase.add(n));log('    应用产品否词(NP,'+name+'): '+productPhrase[name].length+'个');}
-      }
-      for(const name in productExact){
-        if(keys.has(trim(name).toLowerCase())){productExact[name].forEach(n=>negsExact.add(n));log('    应用产品否词(NE,'+name+'): '+productExact[name].length+'个');}
-      }
-    }
-    for(const n of negsPhrase){
-      if(!n)continue;
+    // —— 否定词：Campaign 层级（机型否词 + 按产品否词 + 精准否词）——
+    // 冲突降级：某否词若会否定掉本 Campaign 内某个广告组正在主投的词，就不能下在 Campaign 层级，
+    // 否则「DC_BM 否掉的小词，会把专门投这批小词的广告组一起否掉」。这类词改为 Ad Group 层级、只作用于其余广告组。
+    const negPlan=buildNegPlan(recs, campaign, device, isPat, isAuto, negData);
+    for(const n of negPlan.campPhrase){
       const nr=newRow();
       nr[0]='Sponsored Products';nr[1]='Campaign Negative Keyword';nr[2]='Create';nr[3]=campaign;
       nr[14]='enabled';nr[19]=n;nr[22]='negativePhrase';
       rows.push(nr);
     }
-    for(const n of negsExact){
-      if(!n)continue;
+    for(const n of negPlan.campExact){
       const nr=newRow();
       nr[0]='Sponsored Products';nr[1]='Campaign Negative Keyword';nr[2]='Create';nr[3]=campaign;
       nr[14]='enabled';nr[19]=n;nr[22]='negativeExact';
       rows.push(nr);
     }
-    // 精准否词表（全局，不分产品/机型）→ negativeExact（每个 Campaign 都加）
-    for(const n of exactNegs){
-      if(!n)continue;
-      const nr=newRow();
-      nr[0]='Sponsored Products';nr[1]='Campaign Negative Keyword';nr[2]='Create';nr[3]=campaign;
-      nr[14]='enabled';nr[19]=n;nr[22]='negativeExact';
-      rows.push(nr);
+    if(isPat){
+      log('    跳过否词(Campaign: '+campaign+'，PAT 商品投放不加关键词否词)');
+    }else{
+      log('    应用否词(Campaign 层级): '+negPlan.campPhrase.length+'个NP, '+negPlan.campExact.length+'个NE');
+      const agTotal=negPlan.agOrder.length;
+      for(const it of negPlan.demoted){
+        const victims=[...(negPlan.conflictOf.get(it.word)||[])];
+        const tail = victims.length>=agTotal ? '（本 Campaign 无其他广告组可加，该否词已跳过）' : '已降级为 Ad Group 层级，仅作用于其余广告组';
+        log('    [提示] 否词「'+it.word+'」('+(it.mt==='negativeExact'?'NE':'NP')+') 会否定掉广告组 '+victims.join('、')+' 正在投放的词，'+tail,'warn');
+      }
+    }
+
+    // —— 否定词：Ad Group 层级（自带否定词 + 由 Campaign 层级降级下来的否词）——
+    for(const ag of negPlan.agOrder){
+      const negsPhrase=negPlan.agPhrase[ag], negsExact=negPlan.agExact[ag];
+      if(!negsPhrase.size&&!negsExact.size) continue;
+      for(const n of negsPhrase){
+        if(!n)continue;
+        const nr=newRow();
+        nr[0]='Sponsored Products';nr[1]='Negative Keyword';nr[2]='Create';nr[3]=campaign;
+        nr[4]=ag;nr[14]='enabled';nr[19]=n;nr[22]='negativePhrase';
+        rows.push(nr);
+      }
+      for(const n of negsExact){
+        if(!n)continue;
+        const nr=newRow();
+        nr[0]='Sponsored Products';nr[1]='Negative Keyword';nr[2]='Create';nr[3]=campaign;
+        nr[4]=ag;nr[14]='enabled';nr[19]=n;nr[22]='negativeExact';
+        rows.push(nr);
+      }
+      log('    应用否词(Ad Group: '+ag+'): '+negsPhrase.size+'个NP, '+negsExact.size+'个NE');
     }
   }
   return rows;
@@ -685,6 +1107,10 @@ function preflightCheck(rows){
         if(!/^\d{8}$/.test(String(sd))) add('warn','Invalid value','Campaign「'+camp+'」Start Date「'+sd+'」格式应为 yyyyMMdd（亚马逊会报：Invalid value ... field: Start Date, the correct date format is yyyyMMdd）');
         else if(String(sd)<todayStr) add('warn','Invalid value','Campaign「'+camp+'」Start Date「'+sd+'」早于今天（亚马逊会报：Start date cannot be in the past）');
       }
+      const bidStrategy=String(r[23]||'').trim();
+      if(bidStrategy && !['Fixed bid','Dynamic bids - down only','Dynamic bids - up and down','Rule-based bidding'].includes(bidStrategy)){
+        add('warn','Invalid value','Campaign「'+camp+'」Bidding Strategy「'+bidStrategy+'」非亚马逊标准值（建议使用 Fixed bid / Dynamic bids - down only / Dynamic bids - up and down / Rule-based bidding）');
+      }
     }
     else if(ent==='ad group'){
       const key=camp+'||'+ag;
@@ -696,7 +1122,7 @@ function preflightCheck(rows){
     }
     else if(ent==='product ad'){
       const sku=r[16];
-      if(!sku) add('error','Missing value','Product Ad 行（Campaign '+camp+' / Ad Group '+ag+'）缺少 SKU（亚马逊会报：Product ad did not specify sku for create operation）');
+      if(!sku) add('warn','Missing value','Product Ad 行（Campaign '+camp+' / Ad Group '+ag+'）缺少 SKU（亚马逊会报：Product ad did not specify sku for create operation）；如本就未填 ASIN/SKU，请在上传前补全');
     }
     else if(ent==='keyword'){
       const key=camp+'||'+ag;
@@ -715,9 +1141,9 @@ function preflightCheck(rows){
       else if(!/^(asin="[^"]+"|asin-expanded="[^"]+"|category=.+|close-match|loose-match|substitutes|complements)$/i.test(expr)) add('warn','Improper expression','Product Targeting 表达式「'+expr+'」格式异常，应为 asin="B0..." / asin-expanded="..." / category=... / 或自动投放类型（close-match / loose-match / substitutes / complements）（亚马逊会报：Improper expression value）');
       if(expr){const kk=camp+'||'+ag+'||'+expr.toLowerCase(); if(seenPT[kk]) add('warn','Duplicate Text','同广告组内商品投放表达式重复：'+expr); else seenPT[kk]=1;}
     }
-    else if(ent==='campaign negative keyword'){
+    else if(ent==='campaign negative keyword' || ent==='negative keyword' || ent==='ad group negative keyword'){
       const mt=String(r[22]||'').toLowerCase();
-      if(!['negativephrase','negativeexact'].includes(mt)) add('error','Invalid value','Campaign Negative Keyword 行 Match Type 非法：'+mt+'（应为 negativePhrase/negativeExact）');
+      if(!['negativephrase','negativeexact'].includes(mt)) add('error','Invalid value','Negative Keyword 行 Match Type 非法：'+mt+'（应为 negativePhrase/negativeExact）');
     }
   }
   for(const name in seenCampaignName) if(seenCampaignName[name]>1) add('error','Duplicate Id','文件内存在多个同名 Campaign：'+name+'（亚马逊会报：Campaign with name=... already exists!）');
@@ -734,23 +1160,31 @@ async function generateTemplate(){
   try{
     log('==================================================','info');
     log('[信息] 正在解析原始数据...','info');setProgress(10);
+    // 复位为内置默认映射，再从上传文件加载「映射表」Sheet（配置驱动，不写死）
+    resetMappingToDefault();
+    loadMappingFromWorkbooks([dataFileData, negFileData, mapFileData]);
     const parsed=parseDataFile(dataFileData);
     const data=parsed.data;
     const skipped=parsed.skipped||[];
+    const parseErrors=parsed.parseErrors||[];
     log('[成功] 解析到 '+data.length+' 条 SP 广告记录'+(skipped.length?'（已跳过 '+skipped.length+' 条非 SP 记录）':''),'success');
+    if(parseErrors.length){
+      log('[错误] 解析阶段发现 '+parseErrors.length+' 个问题：','error');
+      for(const e of parseErrors) log('    [❌] '+fmtParseError(e),'error');
+    }
     if(skipped.length){
       const unique=[...new Map(skipped.map(s=>[s.campaign,s])).values()];
-      log('[提示] 以下 Campaign 被识别为 Sponsored Brands / 品牌推广，已自动跳过，不会写入 SP 批量模板：','warn');
+      log('[提示] 以下 Campaign 为非 SP 广告类型（SB/SBV/SD 等），已自动跳过，不会写入 SP 批量模板：','warn');
       for(const s of unique){ log('    · '+s.campaign+(s.adType?'（广告类型：'+s.adType+'）':''),'warn'); }
     }
 
-    let negData={devicePhrase:{},deviceExact:{},productPhrase:{},productExact:{},exactNegs:[]};
+    let negData={devicePhrase:{},deviceExact:{},productPhrase:[],productExact:[],exactNegs:[]};
     if(negFileData){
       log('[信息] 正在解析否词表...','info');setProgress(20);
       negData=parseNegFile(negFileData);
       log('[成功] 机型否词: '+(Object.keys(negData.devicePhrase).length+Object.keys(negData.deviceExact).length)+' 个机型','success');
-      log('[成功] 按产品否词: '+(Object.keys(negData.productPhrase).length+Object.keys(negData.productExact).length)+' 个产品','success');
-      log('[成功] 精准否词: '+negData.exactNegs.length+' 个','success');
+      log('[成功] 按产品否词(全局): '+(negData.productPhrase.length+negData.productExact.length)+' 个','success');
+      log('[成功] 精准否词(全局): '+negData.exactNegs.length+' 个','success');
     }else{
       log('[信息] 未上传否词表，将不添加否定关键词（可在左侧上传后重新生成）','info');
     }
@@ -764,16 +1198,64 @@ async function generateTemplate(){
     log('[自检] 上传前自检（对齐亚马逊错误项）：共 '+pf.length+' 项', pf.length?'warn':'success');
     for(const it of pf){ log('    ['+(it.level==='error'?'❌':'⚠️')+'] '+it.code+' — '+it.msg, it.level==='error'?'error':'warn'); }
     if(pf.some(i=>i.level==='error')) log('    [提醒] 带 ❌ 的错误项会直接导致亚马逊上传失败，请先修正原始数据再下载。','error');
+    // 缺失 ASIN/SKU 提示（warn，不阻断）：用于「暂无 ASIN/SKU 先出框架」的场景，生成后仍给出明确提醒
+    if(data.length && data.every(d=>!trim(d.asin)&&(!d.skuList||d.skuList.length===0))){
+      pf.push({level:'warn', code:'Missing ASIN/SKU', msg:'此版本没有填写 ASIN/SKU，生成的批量模板将不含商品广告（Product Ad），上传亚马逊前请务必补全 SKU，否则广告无法投放。'});
+    }
     log('    [提示] 自检仅覆盖文件格式/字段。两类「账号/目录」类错误需自行确认：① Campaign 名称若已在账号中存在会被拒（already exists），重传前请改名或归档；② SKU 需在当前站点可售（否则报 Product is ineligible for advertising）。','info');
 
+    // —— 错误拦截：存在 error 级问题（解析期 + 自检期）则终止导出，需用户确认「强制导出」——
+    const allErrs=[];
+    for(const e of parseErrors) allErrs.push(fmtParseError(e));
+    for(const it of pf) if(it.level==='error') allErrs.push(it.msg);
+    if(allErrs.length){
+      log('[阻断] 存在 '+allErrs.length+' 个会导致亚马逊上传失败的错误，已终止导出。请先修正；如需继续可点击「强制导出」。','error');
+      showForceExportModal(allErrs, ()=>doExport(rows, negData, pf, skipped, data));
+      return;
+    }
+    doExport(rows, negData, pf, skipped, data);
+  }catch(err){
+    log('[错误] 生成失败: '+err.message,'error');
+    console.error(err);
+  }finally{
+    btn.disabled=false;
+  }
+}
+
+/* ===================== 强制导出弹窗 / 错误格式化 / 实际导出 ===================== */
+function fmtParseError(e){
+  if(e && e.field) return '工作表「'+(e.sheet||'?')+'」第 '+(e.row||'?')+' 行「'+(e.field||'')+'」列：'+(e.reason||'');
+  return '工作表「'+(e&&e.sheet||'?')+'」Campaign「'+(e&&e.campaign||'?')+'」：'+(e&&e.reason||'');
+}
+// 存在 error 级问题时弹出阻断提示；用户点「强制导出」才继续
+function showForceExportModal(errors, onForce){
+  const old=document.getElementById('forceExportModal'); if(old) old.remove();
+  const overlay=document.createElement('div'); overlay.id='forceExportModal';
+  overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;z-index:9999;font-family:system-ui,"Microsoft YaHei",sans-serif;';
+  const box=document.createElement('div');
+  box.style.cssText='background:#1e2433;color:#e6ebf5;max-width:600px;width:92%;max-height:82vh;display:flex;flex-direction:column;border-radius:12px;padding:22px;box-shadow:0 12px 48px rgba(0,0,0,.5);';
+  const list=errors.map((m,i)=>('<div style="padding:6px 0;border-bottom:1px solid #2c3550;font-size:13px;line-height:1.6">'+(i+1)+'. '+String(m).replace(/</g,'&lt;')+'</div>')).join('');
+  box.innerHTML='<div style="font-size:18px;font-weight:700;margin-bottom:4px;color:#ff6b6b">⚠ 存在 '+errors.length+' 个错误，会导致亚马逊上传失败，请先修正</div>'+
+    '<div style="font-size:12px;color:#9fb0cb;margin-bottom:10px">以下问题将导致批量文件在亚马逊被拒，建议先修正原始数据再导出。</div>'+
+    '<div style="overflow:auto;flex:1;margin-bottom:16px">'+list+'</div>'+
+    '<div style="display:flex;gap:10px;justify-content:flex-end">'+
+    '<button id="feCancel" style="background:#2c3550;color:#cdd8ee;border:none;padding:9px 16px;border-radius:8px;cursor:pointer;font-size:14px">取消（返回修改）</button>'+
+    '<button id="feForce" style="background:#e0533d;color:#fff;border:none;padding:9px 16px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600">强制导出</button></div>';
+  overlay.appendChild(box);
+  document.body.appendChild(overlay);
+  document.getElementById('feCancel').onclick=()=>overlay.remove();
+  document.getElementById('feForce').onclick=()=>{ overlay.remove(); log('[强制导出] 用户已确认强制导出，错误项未修正，责任自负。','warn'); onForce(); };
+}
+// 真正执行导出（文件写入 + 复核报告），由正常流程或「强制导出」回调调用
+function doExport(rows, negData, pf, skipped, data){
+  try{
     log('[信息] 正在载入空白模板并填写 Sponsored Products Campaigns...','info');setProgress(60);
     const bytes=base64ToBytes(TEMPLATE_B64);
     const wb=XLSX.read(bytes,{type:'array',cellStyles:true});
     const SHEET='Sponsored Products Campaigns';
-    if(!wb.Sheets[SHEET]){log('[错误] 空白模板中未找到「'+SHEET+'」子表','error');btn.disabled=false;return;}
+    if(!wb.Sheets[SHEET]){log('[错误] 空白模板中未找到「'+SHEET+'」子表','error');return;}
     const newWs=XLSX.utils.aoa_to_sheet([SP_COLUMNS,...rows]);
     wb.Sheets[SHEET]=newWs;
-
     log('[信息] 正在导出文件（其余子表保持不变）...','info');setProgress(80);
     XLSX.writeFile(wb,'亚马逊SP广告批量模板.xlsx');
     setProgress(100);
@@ -781,10 +1263,7 @@ async function generateTemplate(){
     reconcile(data, negData, rows, pf, skipped);
     log('==================================================','info');
   }catch(err){
-    log('[错误] 生成失败: '+err.message,'error');
-    console.error(err);
-  }finally{
-    btn.disabled=false;
+    log('[错误] 导出失败: '+err.message,'error'); console.error(err);
   }
 }
 
@@ -814,14 +1293,17 @@ function reconcile(data, negData, rows, pf, skipped){
   const outSkus=new Set();
   const outNeg=new Set();
   const outExactNeg=new Set();
+  const outCampNeg=new Set();
+  const outCampExactNeg=new Set();
   const placedTop=new Set();
   const campaignBudget={};
+  const campaignBidding={};
   const adGroupBid={};
   for(const r of rows){
     const ent=String(r[1]||'').toLowerCase();
     const camp=r[3];
     const ag=r[4];
-    if(ent==='campaign'){outCampaigns.add(camp);campaignBudget[camp]=r[15];}
+    if(ent==='campaign'){outCampaigns.add(camp);campaignBudget[camp]=r[15];campaignBidding[camp]=String(r[23]||'').trim()||'Fixed bid';}
     else if(ent==='ad group'){outAdGroups.add(camp+'||'+ag);if(r[17]!=null)adGroupBid[camp+'||'+ag]=r[17];}
     else if(ent==='product ad'){outSkus.add(camp+'||'+ag+'||'+r[16]);}
     else if(ent==='keyword'){outKeywords.add(String(r[19]||'').trim().toLowerCase());}
@@ -829,8 +1311,13 @@ function reconcile(data, negData, rows, pf, skipped){
     else if(ent==='bidding adjustment'){placedTop.add(camp);}
     else if(ent==='campaign negative keyword'){
       const mt=String(r[22]||'').toLowerCase();
-      if(mt==='negativeexact')outExactNeg.add(camp+'||'+r[19]);
-      else outNeg.add(camp+'||'+r[19]);
+      if(mt==='negativeexact')outCampExactNeg.add(camp+'||'+r[19]);
+      else outCampNeg.add(camp+'||'+r[19]);
+    }
+    else if(ent==='negative keyword' || ent==='ad group negative keyword'){
+      const mt=String(r[22]||'').toLowerCase();
+      if(mt==='negativeexact')outExactNeg.add(camp+'||'+ag+'||'+r[19]);
+      else outNeg.add(camp+'||'+ag+'||'+r[19]);
     }
   }
 
@@ -840,6 +1327,7 @@ function reconcile(data, negData, rows, pf, skipped){
   const inKeywords=new Set();
   const inSkus=new Set();
   const expBudget={}, expBid={};
+  const expBidding={};
   let kwTotal=0, skuTotal=0;
   const campaignOrder=[]; const byCampaign={};
   const campaignIsAuto={};
@@ -850,7 +1338,11 @@ function reconcile(data, negData, rows, pf, skipped){
     inCampaigns.add(d.campaign);
     inAdGroups.add(d.campaign+'||'+d.adGroup);
     for(const sku of d.skuList)if(sku){inSkus.add(d.campaign+'||'+d.adGroup+'||'+sku);skuTotal++;}
-    if(!(d.campaign in expBudget)&&d.budget>0)expBudget[d.campaign]=Number(d.budget);
+    if(!(d.campaign in expBudget)&&d.budget>0)expBudget[d.campaign]=Math.round(Number(d.budget));
+    if(!(d.campaign in expBidding)){
+      const v=d.biddingStrategy;
+      expBidding[d.campaign]=v||'Fixed bid';
+    }
     const ak=d.campaign+'||'+d.adGroup;
     if(!(ak in expBid)&&d.bid>0)expBid[ak]=Number(d.bid);
   }
@@ -860,7 +1352,7 @@ function reconcile(data, negData, rows, pf, skipped){
     const mt=[...new Set(recs.map(r=>trim(r.matchType).toUpperCase()))].filter(Boolean);
     const hasRealKw=recs.some(r=>r.keywords&&r.keywords.some(k=>k&&!isAutoTargetWord(k)));
     campaignIsAuto[campaign]= mt.includes('AUTO') || (mt.length===0 && !hasRealKw);
-    campaignIsPat[campaign]= campaign.toUpperCase().includes('PAT') || mt.some(m=>['PAT','商品投放','PT','产品投放'].includes(m));
+    campaignIsPat[campaign]= campaign.toUpperCase().includes('_PAT') || mt.some(m=>['PAT','商品投放','PT','产品投放'].includes(m));
   }
   // 商品投放(PAT)的投放词是 asin=/category= 表达式，不计入关键词覆盖
   const inPtExprs=new Set();
@@ -896,6 +1388,8 @@ function reconcile(data, negData, rows, pf, skipped){
   pass('预算一致性（'+Object.keys(expBudget).length+' 个 Campaign）', Object.keys(expBudget).length, Object.keys(expBudget).length-budgetBad.length, budgetBad.length?'不一致: '+budgetBad.join('、'):'全部一致');
   const bidBad=[];for(const ak in expBid)if(String(expBid[ak])!==String(adGroupBid[ak]))bidBad.push(ak.split('||')[1]+'('+expBid[ak]+'→'+(adGroupBid[ak]===undefined?'空':adGroupBid[ak])+')');
   pass('竞价一致性（'+Object.keys(expBid).length+' 个广告组）', Object.keys(expBid).length, Object.keys(expBid).length-bidBad.length, bidBad.length?'不一致: '+bidBad.join('、'):'全部一致');
+  const bidStratBad=[];for(const c in expBidding)if(expBidding[c]!==campaignBidding[c])bidStratBad.push(c+'('+expBidding[c]+'→'+(campaignBidding[c]===undefined?'空':campaignBidding[c])+')');
+  pass('竞价策略一致性（'+Object.keys(expBidding).length+' 个 Campaign）', Object.keys(expBidding).length, Object.keys(expBidding).length-bidStratBad.length, bidStratBad.length?'不一致: '+bidStratBad.join('、'):'全部一致');
 
   // —— 自动投放类型覆盖（紧密/宽泛/同类/关联）——
   const inAuto={};
@@ -924,34 +1418,72 @@ function reconcile(data, negData, rows, pf, skipped){
     lines.push(autoMsg); log(autoMsg, autoMiss?'warn':'success'); autoLines.forEach(l=>{lines.push(l);log(l,'warn');});
   }
 
-  // —— 否定词逐 Campaign 核对 ——
+  // —— 否定词核对：Campaign 层级（机型+产品+精准） + Ad Group 层级（自带 + 冲突降级） ——
+  // 与生成逻辑共用 buildNegPlan，保证「复核」与「实际生成」用的是同一套否词计划，不会互相打架
   lines.push('--------------------------------------------------');
-  log('[复核] 否定词逐 Campaign 核对：','info');
+  log('[复核] 否定词核对（Campaign 层级：机型/产品/精准否词，PAT 跳过；Ad Group 层级：自带否词 + 冲突降级，EM/PAT 跳过自带词）：','info');
   let negIssues=0;
   for(const campaign of campaignOrder){
     const recs=byCampaign[campaign];
     const first=recs[0];
     const device=first.device||getDevice(campaign);
-    const series=first.series||getSeries(campaign);
-    const expNeg=new Set();
-    for(const d of recs)for(const n of d.negatives)if(n)expNeg.add(n);
-    if(device){
-      for(const name in negData.devicePhrase){if(deviceNameFits(name,device)){negData.devicePhrase[name].forEach(n=>expNeg.add(n));}}
-      for(const name in negData.deviceExact){if(deviceNameFits(name,device)){negData.deviceExact[name].forEach(n=>expNeg.add(n));}}
+    const campaignUpper=campaign.toUpperCase();
+    const matchTypes=[...new Set(recs.map(r=>trim(r.matchType).toUpperCase()))].filter(Boolean);
+    const hasAuto=matchTypes.includes('AUTO')||matchTypes.includes('自动');
+    const isPat=campaignUpper.includes('_PAT')||matchTypes.some(m=>['PAT','商品投放','PT','产品投放'].includes(m));
+    let isAuto;
+    if(isPat)isAuto=false;
+    else if(hasAuto)isAuto=true;
+    else if(matchTypes.length>0)isAuto=false;
+    else isAuto=!recs.some(r=>r.keywords&&r.keywords.some(k=>k&&!isAutoTargetWord(k)));
+
+    const plan=buildNegPlan(recs, campaign, device, isPat, isAuto, negData);
+    const campPrefix=campaign+'||';
+
+    // —— Campaign 层级 ——
+    {
+      const gotCampNegSet=new Set([...outCampNeg].filter(k=>k.startsWith(campPrefix)).map(k=>k.slice(campPrefix.length)));
+      const gotCampExactSet=new Set([...outCampExactNeg].filter(k=>k.startsWith(campPrefix)).map(k=>k.slice(campPrefix.length)));
+      const expP=new Set(plan.campPhrase), expE=new Set(plan.campExact);
+      const missP=[...expP].filter(n=>!gotCampNegSet.has(n));
+      const extraP=[...gotCampNegSet].filter(n=>!expP.has(n));
+      const missE=[...expE].filter(n=>!gotCampExactSet.has(n));
+      const extraE=[...gotCampExactSet].filter(n=>!expE.has(n));
+      const ok=missP.length===0&&extraP.length===0&&missE.length===0&&extraE.length===0;
+      const detail=[];
+      if(missP.length)detail.push('NP缺:'+missP.join('、'));
+      if(extraP.length)detail.push('NP多:'+extraP.join('、'));
+      if(missE.length)detail.push('NE缺:'+missE.join('、'));
+      if(extraE.length)detail.push('NE多:'+extraE.join('、'));
+      let suffix='';
+      if(isPat) suffix='（PAT 商品投放，应为 0）';
+      else if(plan.demoted.length) suffix='  冲突降级 '+plan.demoted.length+' 个：'+plan.demoted.map(d=>d.word).join('、');
+      const msg=(ok?'✅':'⚠️')+' '+campaign+' Campaign 层级否词：期望 NP '+expP.size+' + NE '+expE.size+' / 生成 NP '+gotCampNegSet.size+' + NE '+gotCampExactSet.size+(ok?'':('  '+detail.join('  ')))+suffix;
+      lines.push(msg);log(msg, ok?'success':'warn');
+      if(!ok)negIssues++;
     }
-    if(series||campaign){const keys=campaignMatchKeys(campaign,series);for(const name in negData.productPhrase){if(keys.has(trim(name).toLowerCase())){negData.productPhrase[name].forEach(n=>expNeg.add(n));}}for(const name in negData.productExact){if(keys.has(trim(name).toLowerCase())){negData.productExact[name].forEach(n=>expNeg.add(n));}}}
-    for(const n of negData.exactNegs)if(n)expNeg.add(n);
-    const prefix=campaign+'||';
-    const gotNeg=[...outNeg].filter(k=>k.startsWith(prefix)).map(k=>k.slice(prefix.length));
-    const gotExact=[...outExactNeg].filter(k=>k.startsWith(prefix)).map(k=>k.slice(prefix.length));
-    const gotSet=new Set([...gotNeg,...gotExact]);
-    const missing=[...expNeg].filter(n=>!gotSet.has(n));
-    const extra=[...gotSet].filter(n=>!expNeg.has(n));
-    const ok=missing.length===0&&extra.length===0;
-    const msg='['+(ok?'✅':'⚠️')+'] '+campaign+' 否定词：期望 '+expNeg.size+' / 生成 '+(gotNeg.length+gotExact.length)+(ok?'':('  缺失:'+missing.join('、')+(extra.length?'  多余:'+extra.join('、'):'')));
-    lines.push(msg);
-    log(msg, ok?'success':'warn');
-    if(!ok)negIssues++;
+
+    // —— Ad Group 层级（自带否定词 + 由 Campaign 层级降级下来的否词）——
+    for(const ag of plan.agOrder){
+      const expPhrase=plan.agPhrase[ag], expExact=plan.agExact[ag];
+      const agPrefix=campaign+'||'+ag+'||';
+      const gotNegSet=new Set([...outNeg].filter(k=>k.startsWith(agPrefix)).map(k=>k.slice(agPrefix.length)));
+      const gotExactSet=new Set([...outExactNeg].filter(k=>k.startsWith(agPrefix)).map(k=>k.slice(agPrefix.length)));
+      const missP=[...expPhrase].filter(n=>!gotNegSet.has(n));
+      const extraP=[...gotNegSet].filter(n=>!expPhrase.has(n));
+      const missE=[...expExact].filter(n=>!gotExactSet.has(n));
+      const extraE=[...gotExactSet].filter(n=>!expExact.has(n));
+      const ok=missP.length===0&&extraP.length===0&&missE.length===0&&extraE.length===0;
+      const detail=[];
+      if(missP.length)detail.push('NP缺:'+missP.join('、'));
+      if(extraP.length)detail.push('NP多:'+extraP.join('、'));
+      if(missE.length)detail.push('NE缺:'+missE.join('、'));
+      if(extraE.length)detail.push('NE多:'+extraE.join('、'));
+      const mtLabel=[...(plan.agMatchType[ag]||new Set())].join('/')||'未标注';
+      const msg=(ok?'✅':'⚠️')+' '+campaign+' / '+ag+' ('+mtLabel+') 否词：期望 NP '+expPhrase.size+' + NE '+expExact.size+' / 生成 NP '+gotNegSet.size+' + NE '+gotExactSet.size+(ok?'':('  '+detail.join('  ')));
+      lines.push(msg);log(msg, ok?'success':'warn');
+      if(!ok)negIssues++;
+    }
   }
 
   lines.push('--------------------------------------------------');
@@ -973,16 +1505,33 @@ const TEMPLATE_FILL_B64="UEsDBAoAAAAAAIdO4kAAAAAAAAAAAAAAAAAJAAAAZG9jUHJvcHMvUEs
 const NEG_TEMPLATE_B64="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";
 function downloadBlankTemplate(){
   try{
-    const bin=atob(TEMPLATE_FILL_B64);
-    const bytes=new Uint8Array(bin.length);
-    for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);
-    const blob=new Blob([bytes],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+    // 沿用之前的广告框架模板格式（与团队一直使用的 a模板_终 / 原始数据 完全一致）：
+    // 24 个有效列，无「机型」「开始日期」列——机型按 Campaign 名称里的关键字 + 映射表解析，开始日期留空(亚马逊默认立即开始)
+    const headers = [
+      '序号','系列','W01日预算-合计（本币）','广告类型','广告类型占比',
+      'W01日预算（本币）','Campaign','ASIN','SKU','预算占比',
+      '预算','广告组','匹配类型','投放词','竞价','竞价策略',
+      'tos%','最高出价','预估日均click','预估广告日销','投放目的/目标',
+      '否定（仅NP）','note','广告创建checklist','开启checklist'
+    ];
+    // 示例数据行（手机膜 + PAT + 自动广告）：帮助用户照填；实际使用时整行替换即可
+    const sample = [
+      1,'铁甲磁吸镜头支架',300,'SP',1,300,
+      'PC_iPhone18_TJCXJTZJ_SP_DC_EM','B0FCYHWMQK','mhkj_8951_us_iph17proma_qhxl_1a',1,300,
+      'EM','EM','iphone 17 pro max case\n17 pro max case',1.5,'固定竞价',
+      50,2,'','','','esr','','',''
+    ];
+    const dataSheet = XLSX.utils.aoa_to_sheet([headers, sample]);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, dataSheet, 'Sheet1');
+    const out = XLSX.write(wb, {type:'array', bookType:'xlsx'});
+    const blob=new Blob([out],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
     const a=document.createElement('a');
     a.href=URL.createObjectURL(blob);
     a.download='广告框架模板.xlsx';
     document.body.appendChild(a);a.click();document.body.removeChild(a);
     setTimeout(()=>URL.revokeObjectURL(a.href),1000);
-    log('[成功] 已下载「广告框架模板.xlsx】（与 a模板_终.xlsx 一模一样）','success');
+    log('[成功] 已下载「广告框架模板.xlsx」（沿用之前的模板格式，列头与原始数据一致，可直接填写后上传）','success');
   }catch(e){
     log('[失败] 下载模板出错：'+(e&&e.message?e.message:e),'error');
   }
