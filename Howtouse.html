@@ -4,474 +4,385 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>亚马逊批量广告生成工具 · 操作指南</title>
+<title>亚马逊批量广告生成工具 · 使用说明书</title>
 <style>
-  :root {
-    --bg: #f2f2f7;
-    --surface: #ffffff;
-    --elevated: #f9f9fb;
-    --text: #111827;
-    --text-secondary: #6b7280;
-    --text-tertiary: #9ca3af;
-    --accent: #007aff;
-    --accent-soft: #e6f2ff;
-    --success: #34c759;
-    --success-soft: #e8f9ee;
-    --warn: #ff9500;
-    --warn-soft: #fff6e6;
-    --danger: #ff3b30;
-    --danger-soft: #ffebeb;
-    --line: rgba(0, 0, 0, 0.06);
-    --shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
-    --radius: 20px;
-    --radius-sm: 12px;
-    --sidebar: 180px;
+  :root{
+    --blue:#1a73e8; --blue-d:#1666c9; --bg:#f5f7fa; --card:#fff;
+    --line:#e3e8ef; --text:#222; --sub:#666; --ok:#1a7f53; --warn:#c47d00; --err:#d23b3b;
   }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
-      "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  /* Sidebar */
-  .sidebar {
-    position: fixed;
-    top: 0; left: 0;
-    width: var(--sidebar);
-    height: 100vh;
-    padding: 36px 18px;
-    background: rgba(242, 242, 247, 0.78);
-    backdrop-filter: saturate(180%) blur(20px);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-    border-right: 1px solid var(--line);
-    display: flex;
-    flex-direction: column;
-    z-index: 50;
-  }
-
-  .brand { font-size: 15px; font-weight: 700; letter-spacing: -0.3px; }
-  .brand-sub { font-size: 11px; color: var(--text-tertiary); margin-top: 2px; margin-bottom: 28px; }
-
-  .nav { display: flex; flex-direction: column; gap: 2px; }
-  .nav a {
-    display: flex; align-items: center; gap: 10px;
-    padding: 8px 12px;
-    border-radius: 10px;
-    color: var(--text-secondary);
-    text-decoration: none;
-    font-size: 13px; font-weight: 500;
-    transition: all 0.15s ease;
-  }
-  .nav a:hover { background: rgba(0,0,0,0.04); color: var(--text); }
-  .nav a.active { background: var(--accent-soft); color: var(--accent); }
-  .nav a .idx { font-size: 11px; font-weight: 700; opacity: 0.5; min-width: 18px; }
-  .nav a.active .idx { opacity: 0.8; }
-
-  .sidebar-foot { margin-top: auto; font-size: 10px; color: var(--text-tertiary); }
-
-  /* Main */
-  .main { margin-left: var(--sidebar); min-height: 100vh; padding: 48px 40px 96px; }
-  .wrap { max-width: 1100px; margin: 0 auto; }
-
-  .hero {
-    text-align: center;
-    padding: 40px 0 56px;
-  }
-  .hero .eyebrow {
-    display: inline-block;
-    font-size: 11px; font-weight: 700;
-    color: var(--accent);
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-    margin-bottom: 14px;
-    padding: 4px 10px;
-    background: var(--accent-soft);
-    border-radius: 20px;
-  }
-  .hero h1 { font-size: 42px; font-weight: 700; letter-spacing: -1.2px; line-height: 1.1; margin-bottom: 16px; }
-  .hero p { font-size: 17px; color: var(--text-secondary); max-width: 620px; margin: 0 auto; }
-
-  section { margin-bottom: 48px; scroll-margin-top: 28px; }
-
-  .section-head {
-    display: flex; align-items: center; gap: 12px;
-    margin-bottom: 20px;
-  }
-  .section-head .num {
-    width: 28px; height: 28px;
-    display: flex; align-items: center; justify-content: center;
-    border-radius: 8px;
-    background: var(--text);
-    color: #fff;
-    font-size: 12px; font-weight: 700;
-  }
-  .section-head h2 { font-size: 22px; font-weight: 700; letter-spacing: -0.4px; }
-
-  h3 { font-size: 16px; font-weight: 600; margin: 26px 0 10px; }
-  h4 { font-size: 14px; font-weight: 600; margin: 16px 0 6px; }
-
-  p { font-size: 14px; color: var(--text-secondary); margin-bottom: 12px; }
-  p.dark { color: var(--text); }
-
-  ul, ol { margin: 0 0 14px 20px; }
-  li { font-size: 14px; color: var(--text-secondary); margin-bottom: 6px; }
-  strong { color: var(--text); font-weight: 600; }
-
-  code {
-    font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
-    font-size: 12px;
-    background: var(--elevated);
-    color: var(--text);
-    padding: 2px 6px;
-    border-radius: 5px;
-    border: 1px solid var(--line);
-  }
-
-  .card {
-    background: var(--surface);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 28px;
-    margin-bottom: 16px;
-  }
-  .card-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
-  .card-sub { font-size: 13px; color: var(--text-tertiary); margin-bottom: 16px; }
-
-  table { width: 100%; border-collapse: collapse; font-size: 14px; }
-  th, td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
-  th { font-size: 11px; font-weight: 700; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; }
-  tr:last-child td { border-bottom: none; }
-  td:first-child { font-weight: 500; color: var(--text); white-space: nowrap; }
-
-  .tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; }
-  .tag.req { background: var(--danger-soft); color: var(--danger); }
-  .tag.rec { background: var(--warn-soft); color: var(--warn); }
-  .tag.opt { background: var(--elevated); color: var(--text-secondary); }
-
-  .note {
-    border-radius: var(--radius-sm);
-    padding: 14px 18px;
-    margin: 16px 0;
-    font-size: 13px;
-  }
-  .note .label { font-size: 11px; font-weight: 700; margin-bottom: 4px; }
-  .note.tip { background: var(--accent-soft); color: #004299; }
-  .note.tip .label { color: var(--accent); }
-  .note.warn { background: var(--warn-soft); color: #8a4b00; }
-  .note.warn .label { color: var(--warn); }
-  .note.ok { background: var(--success-soft); color: #176633; }
-  .note.ok .label { color: var(--success); }
-
-  .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-  @media (max-width: 860px) { .grid-2 { grid-template-columns: 1fr; } }
-
-  .step { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); }
-  .step:last-child { border-bottom: none; }
-  .step .sn {
-    flex: 0 0 28px; width: 28px; height: 28px;
-    border-radius: 50%;
-    background: var(--accent); color: #fff;
-    font-size: 13px; font-weight: 700;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .step .body h4 { margin: 0 0 2px; font-size: 14px; }
-  .step .body p { margin: 0; }
-
-  footer { margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 11px; color: var(--text-tertiary); text-align: center; }
-
-  @media (max-width: 860px) {
-    .sidebar { position: static; width: 100%; height: auto; flex-direction: row; align-items: center; gap: 8px; padding: 14px 16px; border-right: none; border-bottom: 1px solid var(--line); }
-    .brand, .brand-sub, .sidebar-foot { display: none; }
-    .nav { flex-direction: row; flex-wrap: wrap; gap: 4px; }
-    .nav a { padding: 6px 10px; font-size: 12px; }
-    .nav a .idx { display: none; }
-    .main { margin-left: 0; padding: 32px 20px 64px; }
-    .hero h1 { font-size: 32px; }
-    .hero { padding: 24px 0 36px; }
-  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Microsoft YaHei','PingFang SC',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+  .wrap{max-width:920px;margin:0 auto;padding:28px 20px 60px}
+  header{background:linear-gradient(135deg,#1a73e8,#1666c9);color:#fff;border-radius:14px;padding:28px 30px;margin-bottom:24px}
+  header h1{font-size:26px;font-weight:700}
+  header p{margin-top:6px;opacity:.92;font-size:14px}
+  .toc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 22px;margin-bottom:24px}
+  .toc h2{font-size:15px;color:var(--sub);margin-bottom:10px;font-weight:600}
+  .toc a{display:inline-block;color:var(--blue);text-decoration:none;margin:4px 14px 4px 0;font-size:14px}
+  .toc a:hover{text-decoration:underline}
+  section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px 26px;margin-bottom:18px}
+  section h2{font-size:18px;margin-bottom:12px;padding-left:12px;border-left:4px solid var(--blue)}
+  section h3{font-size:15px;margin:16px 0 8px;color:var(--sub)}
+  p{margin:8px 0;font-size:14.5px}
+  ul,ol{margin:8px 0 8px 22px;font-size:14.5px}
+  li{margin:5px 0}
+  code{background:#eef2f7;padding:1px 6px;border-radius:5px;font-family:Consolas,monospace;font-size:13px;color:#b5341f}
+  .tag{display:inline-block;font-size:11px;padding:2px 9px;border-radius:10px;margin-left:6px;vertical-align:middle}
+  .t-need{background:#fde8e8;color:var(--err)}
+  .t-opt{background:#e8f0fe;color:var(--blue)}
+  .t-auto{background:#e7f4ec;color:var(--ok)}
+  .note{border-left:4px solid #ffd166;background:#fffaf0;padding:10px 14px;border-radius:8px;font-size:13.5px;margin:10px 0}
+  .key{background:#fde8e8;border-left:4px solid var(--err);padding:10px 14px;border-radius:8px;font-size:13.5px;margin:10px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px}
+  .mini{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:14px}
+  .mini b{color:var(--blue)}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13.5px}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:#f0f4fa;font-weight:600}
+  .step{display:flex;align-items:center;gap:10px;background:#f0f4fa;border-radius:10px;padding:10px 14px;margin:8px 0}
+  .step .n{background:var(--blue);color:#fff;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex:none}
+  .pill{font-family:Consolas,monospace;background:#222;color:#9fe7c4;padding:2px 8px;border-radius:6px;font-size:12.5px}
+  footer{text-align:center;color:#999;font-size:12.5px;margin-top:20px}
+  .ok{color:var(--ok);font-weight:600}
+  .err{color:var(--err);font-weight:600}
+  .warn{color:var(--warn);font-weight:600}
 </style>
 </head>
 <body>
+<div class="wrap">
 
-  <aside class="sidebar">
-    <div class="brand">操作指南</div>
-    <div class="brand-sub">亚马逊批量广告生成工具</div>
-    <nav class="nav" id="nav">
-      <a href="#intro"><span class="idx">01</span><span>工具简介</span></a>
-      <a href="#prepare"><span class="idx">02</span><span>前期准备</span></a>
-      <a href="#template"><span class="idx">03</span><span>填写模板</span></a>
-      <a href="#rules"><span class="idx">04</span><span>匹配规则</span></a>
-      <a href="#neg"><span class="idx">05</span><span>否词模板</span></a>
-      <a href="#steps"><span class="idx">06</span><span>操作步骤</span></a>
-      <a href="#faq"><span class="idx">07</span><span>常见问题</span></a>
-      <a href="#notes"><span class="idx">08</span><span>注意事项</span></a>
-    </nav>
-    
-  </aside>
+<header>
+  <h1>亚马逊批量广告生成工具 · 使用说明书</h1>
+  <p>单文件离线工具｜自动把「广告框架表」转换成亚马逊 SP 批量上传模板（Sponsored Products Bulksheet）</p>
+</header>
 
-  <main class="main">
-    <div class="wrap">
+<div class="toc">
+  <h2>目录</h2>
+  <a href="#start">① 快速开始</a>
+  <a href="#upload">② 上传文件</a>
+  <a href="#download">③ 模板下载</a>
+  <a href="#gen">④ 生成广告模板</a>
+  <a href="#adtype">⑤ 广告类型三态</a>
+  <a href="#tos">⑥ TOS 百分比</a>
+  <a href="#block">⑦ 错误拦截与强制导出</a>
+  <a href="#mapping">⑧ 映射表</a>
+  <a href="#inherit">⑨ 续行/多广告组继承</a>
+  <a href="#auto">⑩ 自动广告 & 商品投放</a>
+  <a href="#neg">⑪ 否词表</a>
+  <a href="#check">⑫ 上传前自检</a>
+  <a href="#reconcile">⑬ 自动复核报告</a>
+  <a href="#qa">⑭ 常见问题</a>
+</div>
 
-      <div class="hero" id="intro">
-        <div class="eyebrow">操作指南</div>
-        <h1>亚马逊批量广告<br>生成工具</h1>
-        <p>把 Excel 广告框架一键转成亚马逊 SP（商品推广）批量上传文件，并自动按机型 / 产品 / 搜索词追加否定关键词。</p>
-        <p class="dark" style="margin-top:14px;font-size:14px;">注意：本工具<strong>仅生成 SP 商品推广</strong>。若框架里混入了 SB / SBV（品牌推广）等活动，会被自动识别并跳过，不写入结果文件（可在日志与复核报告查看被跳过的活动）。</p>
-      </div>
+<!-- ① -->
+<section id="start">
+  <h2>① 快速开始（3 步）</h2>
+  <div class="step"><div class="n">1</div><div>点「<b>下载广告框架</b>」拿到 <code>广告框架模板.xlsx</code>，按格式填写产品与广告组（沿用团队旧模板，列头不变）。</div></div>
+  <div class="step"><div class="n">2</div><div>在左上 3 个框上传：<b>广告框架文件</b>（必选）+ <b>否词表</b>（可选）+ <b>映射表</b>（可选，三选一即可）。</div></div>
+  <div class="step"><div class="n">3</div><div>点「<b>生成广告模板</b>」→ 看右侧状态日志。无错误会自动下载 <code>亚马逊SP广告批量模板.xlsx</code>；有错误会提示并需「强制导出」。</div></div>
+  <div class="note">提示：页面右上角「⍰ 使用说明」可随时弹出内置简版说明；本文件是完整版。</div>
+</section>
 
-      <!-- 02 前期准备 -->
-      <section id="prepare">
-        <div class="section-head"><span class="num">02</span><h2>前期准备</h2></div>
-        <div class="grid-2">
-          <div class="card">
-            <div class="card-title">广告框架文件</div>
-            <div class="card-sub">必填</div>
-            <p>在网页「模板下载」区点 <strong>下载广告框架</strong>，得到 <code>广告框架模板.xlsx</code>（与示例模板一致）。固定表头不要修改，按第 03 章规范填写后上传。</p>
-          </div>
-          <div class="card">
-            <div class="card-title">否词表</div>
-            <div class="card-sub">可选</div>
-            <p>在「模板下载」区点 <strong>下载否词模板</strong>，得到 <code>否词模板.xlsx</code>，内含「机型否词 / 按产品否词 / 精准否词」三类工作表。结构见第 05 章。</p>
-          </div>
-        </div>
-        <div class="note tip">
-          <span class="label">提示</span>
-          「模板下载」区有两个独立按钮：<strong>下载广告框架</strong> 与 <strong>下载否词模板</strong>，分别输出两份不同的文件，不要混淆。
-        </div>
-      </section>
-
-      <!-- 03 填写模板（广告框架） -->
-      <section id="template">
-        <div class="section-head"><span class="num">03</span><h2>填写模板（广告框架）</h2></div>
-        <p>模板按<strong>表头名称</strong>识别列，列的位置可自由调整。下表为下载到的 <code>广告框架模板.xlsx</code> 实际列。</p>
-        <div class="card" style="padding: 0; overflow: hidden;">
-          <table>
-            <thead><tr><th>列名</th><th>必填</th><th>说明</th></tr></thead>
-            <tbody>
-              <tr><td><code>Campaign</code></td><td><span class="tag req">必填</span></td><td>广告活动名称。含 <code>PAT</code> 视为商品投放；工具从中提取机型 / 产品，用于自动匹配否词。</td></tr>
-              <tr><td><code>广告类型</code></td><td><span class="tag req">必填</span></td><td>填 <code>SP</code>（Sponsored Products 商品推广），当前仅支持 SP。填 <code>SB</code> / <code>SBV</code> / <code>SBD</code> 等品牌推广活动会被自动识别并跳过，不生成。</td></tr>
-              <tr><td><code>匹配类型</code></td><td><span class="tag req">必填</span></td><td>决定广告类型与匹配方式，取值见第 04 章（EM / BM / PM / AUTO / PAT / 空）。建议始终明确填写，不要留空。</td></tr>
-              <tr><td><code>投放词</code></td><td><span class="tag rec">必填*</span></td><td>关键词：每行一词。<br>商品投放：填 <code>asin="B0XXX"</code> 做单品定投，或填 <code>category="类目ID"</code> 做类目投放（一行一个目标，详见第 04 章）。<br>自动广告：填 紧密 / 宽泛 / 同类 / 关联，每词一行；留空则四类全开。</td></tr>
-              <tr><td><code>SKU</code></td><td><span class="tag req">必填</span></td><td>推广的商品 SKU，多个换行分隔。</td></tr>
-              <tr><td><code>ASIN</code></td><td><span class="tag rec">必填</span></td><td>被推广 ASIN（<code>B0XXX</code>）；需要跟SKU对应。</td></tr>
-              <tr><td><code>广告组</code></td><td><span class="tag req">必填</span></td><td>广告组名称。</td></tr>
-              <tr><td><code>预算</code></td><td><span class="tag req">必填</span></td><td>每日预算。</td></tr>
-              <tr><td><code>竞价</code></td><td><span class="tag req">必填</span></td><td>单次出价。可分别填写（见第 04 章）。</td></tr>
-              <tr><td><code>tos%</code></td><td><span class="tag opt">可选</span></td><td>搜索结果顶部加价（0–900）。</td></tr>
-             
-              <tr><td><code>否定（仅NP）</code></td><td><span class="tag opt">可选</span></td><td>本行自带的词组否定词（默认词组否定 NP）。</td></tr>
-             
-            </tbody>
-          </table>
-        </div>
-        <div class="note ok">
-          <span class="label">续行</span>
-          同一 Campaign 可写多行：第一行写 Campaign 名称，后续行留空 Campaign 即自动合并到上一行。
-        </div>
-        <div class="note tip">
-          <span class="label">辅助列</span>
-          <code>序号</code>、<code>预估日均click</code>、<code>预估广告日销</code>、<code>note</code>、<code>广告创建checklist</code>、<code>开启checklist</code> 等为辅助 / 自检列，可留空，不影响生成。
-        </div>
-      </section>
-
-      <!-- 04 匹配规则 -->
-      <section id="rules">
-        <div class="section-head"><span class="num">04</span><h2>匹配规则</h2></div>
-
-        <div class="card">
-          <h3>匹配类型</h3>
-          <table>
-            <thead><tr><th>匹配类型列</th><th>广告类型</th><th>匹配方式</th></tr></thead>
-            <tbody>
-              <tr><td><code>AUTO</code> / 自动</td><td>自动广告</td><td>不生成关键词，按「投放词」列出的类型开启</td></tr>
-              <tr><td><code>EM</code> / 精准</td><td>手动关键词</td><td>exact</td></tr>
-              <tr><td><code>BM</code> / 广泛</td><td>手动关键词</td><td>broad</td></tr>
-              <tr><td><code>PM</code> / 词组</td><td>手动关键词</td><td>phrase</td></tr>
-              <tr><td><code>PAT</code> / 商品投放</td><td>商品投放</td><td>Product Targeting</td></tr>
-              <tr><td>空 / 其它</td><td>手动关键词</td><td>默认 exact（建议始终明确填 EM / BM / PM）</td></tr>
-            </tbody>
-          </table>
-          <div class="note tip">
-            <span class="label">匹配类型</span>
-            始终明确填写 <code>EM / BM / PM</code>，避免依赖默认行为；<code>BM</code> 即广泛、<code>EM</code> 即精准、<code>PM</code> 即词组。关键词中不再使用 <code>+</code> 来代表广泛匹配。
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>商品投放（PAT）</h3>
-          <ul>
-            <li>识别：Campaign 含 <code>PAT</code>，或匹配类型写 <code>PAT / 商品投放</code>。</li>
-            <li>投放词填投放目标表达式，每行一个：
-              <ul style="margin-top:6px">
-                <li>单品定投：<code>asin="B0XXX"</code>（也可只写裸 ASIN <code>B0XXX</code>，工具会自动补引号）。</li>
-                <li><strong>类目投放</strong>：<code>category="类目ID"</code>。类目ID 是数字，需在亚马逊后台「商品投放 → 选择类目」后复制表达式里的数字（如 <code>category="2335753011"</code>）。</li>
-              </ul>
-            </li>
-            <li>生成 Product Targeting 行，不会生成关键词。</li>
-          </ul>
-          <div class="note warn">
-            <span class="label">类目投放注意</span>
-            ① <code>category=</code> 后必须填亚马逊「类目ID」数字，<strong>不要直接填中文类目名</strong>（如 <code>category="手机壳"</code> 会导入失败）。<br>
-            ② 建议带英文引号 <code>"</code>，对齐官方批量文件格式。<br>
-            ③ 一个广告组可写多行 <code>category=</code> 投多个类目；类目还能加细化条件，写成 <code>category="类目ID" with refinements(...)</code>。<br>
-            ④ 商品投放行的「投放词」不要混普通关键词，否则会被当成表达式报错。
-          </div>
-          <div class="note warn">
-            <span class="label">注意</span>
-            商品投放的「投放词」为空时，只建框架、不生成投放行。
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>自动广告的四种投放类型</h3>
-          <p>在「投放词」列按换行填写要开启的类型，未列出的自动暂停。留空则四类全开。</p>
-          <table>
-            <thead><tr><th>投放词</th><th>亚马逊类型</th><th>含义</th></tr></thead>
-            <tbody>
-              <tr><td><code>紧密</code> / <code>紧密匹配</code></td><td><code>close-match</code></td><td>搜索词与商品高度相关</td></tr>
-              <tr><td><code>宽泛</code> / <code>宽泛匹配</code></td><td><code>loose-match</code></td><td>搜索词与商品松散相关</td></tr>
-              <tr><td><code>同类</code> / <code>同类商品</code></td><td><code>substitutes</code></td><td>相似 / 竞品商品详情页</td></tr>
-              <tr><td><code>关联</code> / <code>关联商品</code></td><td><code>complements</code></td><td>互补商品详情页</td></tr>
-            </tbody>
-          </table>
-          <h4>不同出价</h4>
-          <ul>
-            <li>匹配类型填 <code>AUTO</code>，在「竞价」列对每个类型单独写出价，需确保在同一行。</li>
-            <li>多个类型换行填写，各类型可设不同出价；未写出的类型默认不开启。</li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- 05 否词模板 -->
-      <section id="neg">
-        <div class="section-head"><span class="num">05</span><h2>否词模板</h2></div>
-        <p>下载得到的 <code>否词模板.xlsx</code> 含 <strong>6 个工作表</strong>：<code>18否词</code> / <code>18air否词</code> / <code>18pro否词</code> / <code>18pm否词</code>（机型否词），<code>按产品否词</code>，<code>精准否词</code>。按表名自动识别类型，上传后工具会按规则追加到对应广告活动。</p>
-
-        <div class="note warn">
-          <span class="label">两种否定方式</span>
-          <strong>NP</strong> = 词组否定（negativePhrase）：搜索词<strong>包含</strong>该词组即否定。<br>
-          <strong>NE</strong> = 精准否定（negativeExact）：搜索词<strong>完全等于</strong>该词才否定。
-        </div>
-
-        <div class="card">
-          <h3>① 机型否词（4 个表）</h3>
-          <p>每个表对应一个 iPhone 机型，表名含「否词」即识别为机型否词。</p>
-          <ul>
-            <li>第一行：<code>A1</code> 写表头「否定机型」；<code>B1</code> 写<strong>机型名</strong>，例如 <code>iPhone 18 Pro Max</code>（需与广告名能匹配）。</li>
-            <li><code>A列</code>：否定关键词；<code>B列</code>：否定类型 <code>NP</code> 或 <code>NE</code>。</li>
-          </ul>
-          <div class="note tip">
-            <span class="label">如何被应用</span>
-            工具从 Campaign 名提取机型（如 <code>iPhone18PM</code> → <code>iPhone 18 Pro Max</code>），与表内机型名做模糊匹配（子集匹配，<code>18PM</code> 可命中「iPhone 18 Pro Max」）。命中后，该表所有词加为对应类型否定词。
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>② 按产品否词（1 个表）</h3>
-          <p>按产品代号 / 系列否定，只有广告名包含该产品的活动才会应用。</p>
-          <ul>
-            <li>第一行：<code>A1</code> 写表头「关键词」；<code>B1</code> 起写<strong>产品代号</strong>，例如 <code>GHMSBH</code>（即广告名里的产品代码）。</li>
-            <li><code>A列</code>：否定关键词；<code>B列</code>（及后续列）：各产品代号下的 <code>NP</code> / <code>NE</code>。</li>
-          </ul>
-          <div class="note tip">
-            <span class="label">如何被应用</span>
-            若 Campaign / 广告组名包含该产品代号（如 <code>SPP_iPhone17_GHMSBH_SP_DC_EM</code> 中的 <code>GHMSBH</code>），则该词加为对应类型否定词。也支持填系列全称（通过全称 ↔ 代码映射命中）。
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>③ 精准否词（1 个表）</h3>
-          <p>全局否定，<strong>每个广告活动</strong>都会追加。</p>
-          <ul>
-            <li>第一行：<code>A1</code> 写表头「搜索词」；<code>B1</code> 写表头「否定类型」。</li>
-            <li><code>A列</code>：搜索词；<code>B列</code>：<code>NE</code>（精准否定）。</li>
-          </ul>
-        </div>
-
-        <div class="note ok">
-          <span class="label">上传后核对</span>
-          上传否词表后，日志会显示「机型否词 X 个机型 / 按产品否词 X 个产品 / 精准否词 X 个」；生成时每条记录还会打印「应用机型否词(NP, iPhone 18 Pro Max): N个」等，据此确认是否生效。
-        </div>
-      </section>
-
-      <!-- 06 操作步骤 -->
-      <section id="steps">
-        <div class="section-head"><span class="num">06</span><h2>操作步骤</h2></div>
-        <div class="card">
-          <div class="step"><div class="sn">1</div><div class="body"><h4>下载模板</h4><p>在「模板下载」区点 <strong>下载广告框架</strong> 得 <code>广告框架模板.xlsx</code> 并填好；如需否定词，点 <strong>下载否词模板</strong> 得 <code>否词模板.xlsx</code> 并按第 05 章填写。</p></div></div>
-          <div class="step"><div class="sn">2</div><div class="body"><h4>上传文件</h4><p>上传广告框架文件；如需否定词，再上传否词表（同样支持 .xlsx / .xls）。</p></div></div>
-          <div class="step"><div class="sn">3</div><div class="body"><h4>生成并下载</h4><p>点「生成广告模板」，检查日志是否有红 / 黄色提示；否词应用数量会在日志中显示。</p></div></div>
-        </div>
-      </section>
-
-      <!-- 07 常见问题 -->
-      <section id="faq">
-        <div class="section-head"><span class="num">07</span><h2>常见问题</h2></div>
-        <div class="card">
-          <h4>匹配类型 BM 就是广泛匹配吗？</h4>
-          <p>是。匹配类型列填 <code>BM</code> 即 broad 广泛匹配；<code>EM</code> 为 exact 精准、<code>PM</code> 为 phrase 词组。无需在关键词里加 <code>+</code>。</p>
-          <h4>商品投放为什么生成失败？</h4>
-          <p>投放词为空或表达式格式不对。在「投放词」列填 <code>asin="B0XXX"</code> 或 <code>category="类目ID"</code> 即可（详见第 04 章「商品投放」）。</p>
-          <h4>关键词匹配方式不对？</h4>
-          <p>检查匹配类型是否写了 <code>BM</code>（广泛）/ <code>EM</code>（精准）/ <code>PM</code>（词组）。匹配类型列留空时，默认按 exact 精准处理。</p>
-          <h4>自动广告怎么只开部分类型？</h4>
-          <p>匹配类型填 <code>AUTO</code>，在「投放词」列写要开启的类型，如 <code>紧密</code>、<code>关联</code>。留空则全开。</p>
-          <h4>上传后提示「缺少某列」？</h4>
-          <p>表头名称与要求不符。按第 03 章列名核对（识别看列名，不看位置）。</p>
-          <h4>否词模板的三类表有什么区别？</h4>
-          <p><strong>机型否词</strong>按机型命中（Campaign 名里的机型）；<strong>按产品否词</strong>按产品代号命中（Campaign 名里的代码，如 GHMSBH）；<strong>精准否词</strong>全局生效，所有活动都加。</p>
-          <h4>机型否词的机型名怎么填才匹配？</h4>
-          <p>按标准写法，如 <code>iPhone 18 Pro Max</code>、<code>iPhone 18</code>、<code>iPhone 18 air</code>、<code>iPhone 18 Pro</code>。工具用模糊子集匹配，<code>18PM</code> 也能命中「iPhone 18 Pro Max」。</p>
-          <h4>NP 和 NE 该怎么选？</h4>
-          <p>想更宽松地拦截（只要搜索词里出现该词组就否定）用 <code>NP</code>；只想精确拦截完全一致的搜索词用 <code>NE</code>。</p>
-          <h4>类目投放怎么写？</h4>
-          <p>匹配类型列填 <code>商品投放</code>（或 Campaign 名含 <code>PAT</code>），「投放词」列填 <code>category="类目ID"</code>（类目ID 从后台商品投放选类目后复制）。一行一个类目，可写多行投多个类目；不要填中文类目名，也不要与关键词混填。单品定投则填 <code>asin="B0XXX"</code>。</p>
-          <h4>为什么 SB 广告没出现在结果里？</h4>
-          <p>本工具只生成 SP 商品推广，SB / SBV 品牌推广会被自动跳过。被跳过的活动会在生成日志（黄色提示）和复核报告的「跳过记录」中列出，可据此核对。</p>
-        </div>
-      </section>
-
-      <!-- 08 注意事项 -->
-      <section id="notes">
-        <div class="section-head"><span class="num">08</span><h2>注意事项</h2></div>
-        <div class="card">
-          <ul>
-            <li><strong>匹配类型按行生效</strong>：同一行的投放词共用同一种匹配方式，建议始终明确填写 EM / BM / PM。</li>
-            <li><strong>商品投放务必填投放词</strong>：否则只建空框架。</li>
-            <li><strong>自动广告留空即全开</strong>：填了类型则只开启列出的，其余暂停。</li>
-            <li><strong>否词表表名决定类型</strong>：含「按产品」→ 按产品否词；含「精准」→ 精准否词；含「否词」→ 机型否词。改名会导致识别错误。</li>
-            <li><strong>否词上传后看日志</strong>：确认「机型 / 按产品 / 精准」三类否词的应用数量，避免漏配。</li>
-            <li><strong>仅生成 SP</strong>：SB / SBV 等品牌推广活动会被自动识别并跳过，不会写入批量文件；生成日志与复核报告会列出被跳过的活动，便于核对。</li>
-          </ul>
-        </div>
-      </section>
-
-      <footer>
-        亚马逊批量广告生成工具 · 操作指南
-      </footer>
-
+<!-- ② -->
+<section id="upload">
+  <h2>② 上传文件 <span class="tag t-need">必选1</span><span class="tag t-opt">可选2</span><span class="tag t-opt">可选3</span></h2>
+  <p>页面顶部有 <b>3 个上传框</b>，支持点击或拖拽（.xlsx / .xls）。每个框均可单独删除重传。</p>
+  <div class="grid">
+    <div class="mini">
+      <b>1. 广告框架文件</b> <span class="tag t-need">必选</span>
+      <p>核心数据源。一张表里同时放手机膜/平板壳膜/手表壳膜/耳机壳，靠 <b>Campaign 名称里的关键字 + 映射表</b> 区分机型（无需单独机型列）。</p>
     </div>
-  </main>
+    <div class="mini">
+      <b>2. 否词表文件</b> <span class="tag t-opt">可选</span>
+      <p>含「机型否词 / 按产品否词 / 精准否词」三类 Sheet。不上传则不添加否定关键词。</p>
+    </div>
+    <div class="mini">
+      <b>3. 映射表文件</b> <span class="tag t-opt">可选</span>
+      <p>含「映射表」Sheet，配置系列/机型关键字。也可把该 Sheet 内嵌进框架文件或否词文件（见 ⑧）。</p>
+    </div>
+    <div class="mini">
+      <b>「映射表」Sheet 自动跳过</b>
+      <p>框架/否词文件里若含名为「映射表」的 Sheet，工具只把它当配置读，<b>不会</b>当成广告数据去生成，可放心放进去。</p>
+    </div>
+  </div>
+</section>
 
-  <script>
-    const links = Array.from(document.querySelectorAll('.nav a'));
-    const sections = links.map(a => document.querySelector(a.getAttribute('href')));
-    function onScroll() {
-      const y = window.scrollY + 120;
-      let active = 0;
-      sections.forEach((s, i) => { if (s && s.offsetTop <= y) active = i; });
-      links.forEach((a, i) => a.classList.toggle('active', i === active));
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-  </script>
+<!-- ③ -->
+<section id="download">
+  <h2>③ 模板下载</h2>
+  <p>生成框下方有两个下载按钮，随时可用：</p>
+  <ul>
+    <li><span class="pill">⬇ 下载广告框架</span> 下载 <code>广告框架模板.xlsx</code> —— 与团队一直用的旧模板（a模板_终）列头完全一致，含一行手机膜+PAT+自动广告示例，照填即可。</li>
+    <li><span class="pill">⬇ 下载否词模板</span> 下载 <code>否词模板.xlsx</code> —— 含 18/18air/18pro/18pm 机型否词 + 按产品否词 + 精准否词示例。</li>
+  </ul>
+  <div class="note">框架模板刻意<b>不含</b>「机型」「开始日期」两列：机型由 Campaign 名解析，开始日期留空（亚马逊默认立即开始）。如需指定开始日期，可自己在数据里加一列「开始日期」。</div>
+</section>
 
+<!-- ④ -->
+<section id="gen">
+  <h2>④ 生成广告模板</h2>
+  <p>点「<b>↗ 生成广告模板</b>」执行全流程：解析 → 套用否词 → 生成行 → 上传前自检 → 导出 → 自动复核。过程中右侧「状态日志」实时显示进度，底部有进度条。</p>
+  <ul>
+    <li><b>正常</b>：直接下载 <code>亚马逊SP广告批量模板.xlsx</code>（原空白模板的其余子表保持不变，只填「Sponsored Products Campaigns」Sheet）。</li>
+    <li><b>有 Error 级问题</b>：终止导出并弹出错误清单，需点「强制导出」才会继续（见 ⑦）。</li>
+    <li><b>无 ASIN/SKU</b>：仍可生成（不阻断），但会提示「此版本没有填写 ASIN/SKU，请检查」（见 ⑭）。</li>
+  </ul>
+</section>
+
+<!-- ⑤ -->
+<section id="adtype">
+  <h2>⑤ 广告类型三态校验</h2>
+  <p>「广告类型」列决定了每一行是否被处理，严格分三种状态：</p>
+  <table>
+    <tr><th>填写值</th><th>判定</th><th>结果</th></tr>
+    <tr><td><code>SP</code>（或 商品推广 / Sponsored Products）</td><td class="ok">处理</td><td>正常生成 SP 广告行</td></tr>
+    <tr><td><code>SB / SBV / SBD / SD</code>（品牌/展示型）</td><td class="warn">跳过</td><td>整条 Campaign 不写入模板（日志会列出被跳过的名单）</td></tr>
+    <tr><td>空 / 其他任意值（如拼错、漏填）</td><td class="err">Error</td><td>报错并阻断导出，需修正或强制导出</td></tr>
+  </table>
+  <div class="key">易错点：同一个产品常只在<b>首行</b>写广告类型，其余广告组行留空 —— 工具会自动「继承」上一行的广告类型，<u>不会</u>误报缺失（详见 ⑨）。但若整条 Campaign 第一个有效行就没写 SP，仍会判 Error。</div>
+</section>
+
+<!-- ⑥ -->
+<section id="tos">
+  <h2>⑥ TOS 百分比（顶部加价）</h2>
+  <p>「tos%」列只能填<b>百分比</b>，会自动归一化：</p>
+  <ul>
+    <li>填 <code>50</code> → 自动当作 <code>50%</code>；填 <code>50%</code> 也正确。</li>
+    <li>非法格式（如 <code>50.5.2</code> 或文字）会<b>报错并定位到具体单元格</b>（工作表名+行号+tos%列），提示「『xxx』不是有效的百分比」。</li>
+    <li>范围：0 ~ 900%（亚马逊上限），负数或超限都会报错。</li>
+    <li>生成结果写入「Bidding Adjustment / placementTop」行，值为整数百分比（如 50）。</li>
+  </ul>
+</section>
+
+<!-- ⑦ -->
+<section id="bidding-strategy">
+  <h2>⑦ 竞价策略（Bidding Strategy）</h2>
+  <p>框架模板新增「竞价策略」列（Campaign 层级字段，写在首行即可，续行自动继承）。不填默认 <b>Fixed bid</b>（固定竞价）。</p>
+  <h3>支持的写法（大小写/中英文皆可）</h3>
+  <table>
+    <tr><th>亚马逊标准值</th><th>中文含义</th><th>可用简写</th><th>亚马逊实际行为</th></tr>
+    <tr><td><code>Fixed bid</code></td><td>固定竞价</td><td>固定竞价 / 固定出价 / 固定 / Fixed / FB</td><td>用你填的精确出价，不根据转化概率自动升降（最保守，可控性最高）</td></tr>
+    <tr><td><code>Dynamic bids - down only</code></td><td>仅降低（动态只降）</td><td>仅降低 / 只降低 / 仅降 / 动态仅降 / Down only / DO</td><td>亚马逊判断转化概率低时，<b>最多降 100%</b>（也就是出价可能趋近于 0，不跑）；转化概率高的不升（保守动态）</td></tr>
+    <tr><td><code>Dynamic bids - up and down</code></td><td>提高和降低（动态升降）</td><td>提高和降低 / 提高与降低 / 升降 / 可升可降 / 动态升降 / Up and down / UD</td><td>亚马逊判断转化概率高时<b>最高 +100%</b>（如出价 1 最高可到 2）、转化概率低时<b>最多 -100%</b>（激进动态，容易跑出转化但花费波动大）</td></tr>
+    <tr><td><code>Rule-based bidding</code></td><td>规则竞价（基于 ROAS）</td><td>规则竞价 / 规则出价 / 基于规则 / Rule-based / RB / Rule</td><td>需账号中预先配置竞价规则（工具只负责填标准值，不校验规则本身）</td></tr>
+  </table>
+  <ul>
+    <li>不填此列 → 默认 <b>Fixed bid</b>（原行为不变，旧模板完全兼容）。</li>
+    <li>填写了但无法识别 → 日志告警 + 错误列表提示，并<b>回退为 Fixed bid</b>。</li>
+    <li>竞价策略是 <b>Campaign 级</b>字段，同一 Campaign 的所有广告组共用一套策略。</li>
+  </ul>
+</section>
+
+<!-- ⑧ -->
+<section id="block">
+  <h2>⑧ 错误拦截与强制导出</h2>
+  <p>生成时做两层错误检测（解析期 + 上传前自检期）。<b>只要存在任意 Error 级问题</b>：</p>
+  <ul>
+    <li>导出被<b>阻断</b>，状态日志提示「存在 N 个会导致亚马逊上传失败的错误，已终止导出」。</li>
+    <li>弹出红色弹窗，逐条列出错误（如缺 Campaign Name、出价缺失、匹配类型非法、重复 ID 等），并明确「会导致亚马逊上传失败，请先修正」。</li>
+    <li>点「取消」返回修改；点「<b>强制导出</b>」则明知有错仍继续下载（责任自负，日志会记录）。</li>
+  </ul>
+  <div class="note">Warn 级（如缺 SKU、日期格式、出价超范围）只警告、不阻断，正常也会导出。</div>
+</section>
+
+<!-- ⑨ -->
+<section id="mapping">
+  <h2>⑨ 映射表（关键字 → 标准名）</h2>
+  <p>用于把 <b>Campaign 名称里的关键字</b>解析成标准「系列」和「机型」。好处：新品类/新系列<b>不必改代码</b>，在表里加几行规则即可。</p>
+
+  <h3>三种提供方式（任选其一，无需重复）</h3>
+  <ul>
+    <li><b>A.</b> 单独上传含「映射表」Sheet 的 xlsx（第 3 个上传框）。</li>
+    <li><b>B.</b> 把「映射表」Sheet 做进你的<b>广告框架文件</b>里（末尾加一个 Sheet）。</li>
+    <li><b>C.</b> 把「映射表」Sheet 做进<b>否词表文件</b>里。</li>
+  </ul>
+  <p>三者都未提供时，工具使用<b>内置默认</b>（iPhone 系列正则）。上传文件里的规则会<b>覆盖</b>默认值，只覆盖你提供的部分。</p>
+
+  <h3>Sheet 格式（列头随意，按列顺序取）</h3>
+  <table>
+    <tr><th>第1列 类型</th><th>第2列 键（Campaign 里的代码）</th><th>第3列 值（输出的标准名）</th></tr>
+    <tr><td>系列</td><td><code>QHCX</code></td><td>巧汇磁吸</td></tr>
+    <tr><td>系列</td><td><code>TJCXJTZJ</code></td><td>铁甲磁吸镜头支架</td></tr>
+    <tr><td>机型</td><td><code>IPADPRO11</code></td><td>iPad Pro 11</td></tr>
+    <tr><td>机型</td><td><code>IPHONE18PROMAX</code></td><td>iPhone 18 Pro Max</td></tr>
+  </table>
+  <div class="key">记忆口诀：<b>键 = 进</b>（出现在 Campaign 名称里，用来匹配）；<b>值 = 出</b>（出现在生成的模板里，是标准答案）。<br>例：Campaign 含 <code>TJCXJTZJ</code> → 系列输出「铁甲磁吸镜头支架」。</div>
+
+  <h3>匹配逻辑</h3>
+  <ul>
+    <li><b>系列</b>：按「简称长度从长到短」逐个检查 Campaign 名是否 <code>包含</code> 该简称，命中第一个即返回标准系列名。例：<code>_SP_DC_EM_TJCXJTZJ_</code> → 命中 <code>TJCXJTZJ</code>。</li>
+    <li><b>机型</b>：若你提供了任何机型规则，按「关键字长度从长到短」匹配；若<b>没提供</b>任何机型规则，退回内置 iPhone 正则（兼容旧 iPhone 模板）。</li>
+  </ul>
+</section>
+
+<!-- ⑩ -->
+<section id="inherit">
+  <h2>⑩ 续行 / 多广告组继承</h2>
+  <p>框架表里常出现两种「空单元格」场景，工具都会智能继承，避免误报：</p>
+  <ul>
+    <li><b>合并单元格续行</b>：Campaign 列空、但本行有其它字段（系列/投放词/SKU 等）→ 视为上一行的延续，沿用同一 Campaign 并补齐缺失字段。</li>
+    <li><b>多广告组行</b>：同一产品拆成 DC_EM / DC_BM / AUTO / FK_BM 多个广告组，通常只在首行写广告类型/预算/竞价 → 后续行会从前一行继承这些值（仅当整条 Campaign 第一个有效行也没写时，才判缺失 Error）。</li>
+  </ul>
+  <div class="note">若上一行本身是 SB/SBV/SD（被跳过），其续行也会一并跳过，不会混入 SP 模板。</div>
+
+  <h3>合并单元格自动展开（重要）</h3>
+  <p>Excel 的合并单元格<b>只有左上角一格有值</b>，读取后其余格是空的。工具会在解析前按合并区域把值回填到区域内每一格，
+  并在日志提示「检测到 N 处合并单元格，已自动展开填充」。没有这步会出现两个典型问题：</p>
+  <ul>
+    <li>SKU 列被合并 → 第二个及之后的广告组拿不到 SKU，漏生成 Product Ad 行；</li>
+    <li>匹配类型列被合并 → 后续行匹配类型为空，关键词被默认成精准(exact)。</li>
+  </ul>
+  <p>即便如此，仍建议按下面两条做兜底继承：</p>
+  <ul>
+    <li><b>SKU</b>：本行没写 → 沿用<b>同一 Campaign 内</b>最近一次填写的 SKU（同一 Campaign 的多个广告组通常共用 SKU）。</li>
+    <li><b>匹配类型</b>：本行没写 → 按「同广告组上一行 → 广告组名 → Campaign 名」的顺序推断。</li>
+  </ul>
+
+  <h3>匹配类型推断规则</h3>
+  <p>关键词的匹配方式（exact / broad / phrase）按以下顺序确定，取第一个有值的：</p>
+  <ol>
+    <li>「匹配类型」列本行的值；</li>
+    <li>同一广告组上一行的值；</li>
+    <li>从广告组名推断（如 <code>DC_BM</code> → BM、<code>FK_EM</code> → EM、<code>AUTO</code> → 自动）；</li>
+    <li>从 Campaign 名推断（如 <code>SPP_iPhone18PM_GQMSBH_SP_DC_BM</code> → BM）。</li>
+  </ol>
+  <p>名字里<b>同时出现多种</b>（如 <code>JTC_EM/BM</code>）时无法判定，会留空并交由上一层规则处理 —— 此时建议在「匹配类型」列显式填写。
+  若最终仍为空，关键词默认按 <b>exact（精准）</b>，日志会提示有多少行被自动补全。</p>
+  <div class="note">匹配类型列填 <code>ALL</code> / <code>全部</code> 时，关键词按 <b>broad（广泛）</b> 处理，且该广告组会正常加否词。</div>
+</section>
+
+<!-- ⑪ -->
+<section id="auto">
+  <h2>⑪ 自动广告 & 商品投放</h2>
+  <h3>自动广告（AUTO）</h3>
+  <p>在「匹配类型」列标 <code>AUTO</code>/<code>自动</code>，「投放词」列按行填写自动投放类型（可换行多个）：</p>
+  <ul>
+    <li><code>紧密匹配</code> / <code>close-match</code></li>
+    <li><code>宽泛匹配</code> / <code>loose-match</code></li>
+    <li><code>同类商品</code> / <code>substitutes</code></li>
+    <li><code>关联商品</code> / <code>complements</code></li>
+  </ul>
+  <p>每个类型可单独带出价，如 <code>紧密 0.85</code>；不写数字则继承「竞价」列。未列出的自动类型会置为 <b>paused</b>（关闭），不会全开。</p>
+
+  <h3>商品投放（PAT）</h3>
+  <p>满足任一即判定为商品投放：Campaign 名含 <code>_PAT</code>，或匹配类型列标 <code>PAT/商品投放/PT/产品投放</code>。「投放词」列承载投放目标：</p>
+  <ul>
+    <li>裸 ASIN <code>B0XXXX</code> 或 <code>asin=B0XXXX</code> → 规范为 <code>asin="B0XXXX"</code>（精准定投）</li>
+    <li><code>asin-expanded=B0XXXX</code> → 扩展定投</li>
+    <li><code>category=xxx</code> → 品类定投（原样保留）</li>
+  </ul>
+  <p>商品投放生成「Product Targeting」行，<b>不生成</b>关键词行；若缺少投放目标表达式会警告。</p>
+</section>
+
+<!-- ⑫ -->
+<section id="neg">
+  <h2>⑫ 否词表</h2>
+  <p>否词表分三类 Sheet，分别处理：</p>
+  <table>
+    <tr><th>Sheet 名含</th><th>含义</th><th>生成结果</th></tr>
+    <tr><td>「否词」</td><td>按机型分列（第2列写机型名）</td><td>机型否词：词组否定(NP)+精准否定(NE)</td></tr>
+    <tr><td>「按产品」</td><td>第1行是产品名，单元格填 NP/NE</td><td>按产品否词（支持简称/全称两种表头写法）</td></tr>
+    <tr><td>「精准」</td><td>全局精准否词</td><td>对 BM/PM/AUTO 广告组加精准否定(NE)；EM/PAT 广告组不加</td></tr>
+  </table>
+  <ul>
+    <li><b>NP=词组否定(negativePhrase)</b>，<b>NE=精准否定(negativeExact)</b>，单元格不填则不加。</li>
+    <li>记录自带否定词（框架表「否定词」列）支持按前缀标记区分 NP/NE：
+      <ul>
+        <li>无前缀 → 默认 <b>NP</b>（词组否定），如 <code>iphone case</code></li>
+        <li><code>NE:</code> 或 <code>NE：</code>（中英文冒号均可）→ <b>NE</b>（精准否定），如 <code>NE:iphone 15 pro max case</code></li>
+        <li><code>NP:</code> 或 <code>NP：</code> → 显式标注 <b>NP</b>（与无前缀等价）</li>
+      </ul>
+      <p>同一单元格内可混填，每行一条，互不影响。例：</p>
+<pre>iphone case
+ipad case
+NE:iphone 15 pro max case
+NE:ipad pro case</pre>
+    </li>
+    <li><b>机型否词的匹配方式：归一化后精确相等。</b>
+      否词表子表名与 Campaign 里的机型段都会被归一化成同一串再比较，<b>不再是模糊包含</b>：
+      <table>
+        <tr><th>写法</th><th>归一化结果</th></tr>
+        <tr><td>iPhone 18 Pro Max / 18 pro max / 18PM / iPhone18PM</td><td><code>18promax</code></td></tr>
+        <tr><td>iPhone 18 Pro / 18Pro</td><td><code>18pro</code></td></tr>
+        <tr><td>iPhone 18 Air / 18Air</td><td><code>18air</code></td></tr>
+      </table>
+      所以 <code>18pm否词</code> 只会作用于 18 Pro Max，<b>不会</b>再误伤 18 / 18Pro / 18Air 的广告。
+      机型段取 Campaign 名第 1、2 个 <code>_</code> 之间的部分（例：<code>SPP_iPhone18PM_YPSJTM_SP_JTC_EM/BM_18PM/18Pro</code> → <code>iPhone18PM</code>，末尾的 <code>18PM/18Pro</code> 不算）。
+      日志会打印「子表名 → 归一化机型」的对照，便于一眼核对否词表是否与 Campaign 对得上。
+    </li>
+    <li>按产品否词同时支持表头填简称（如 <code>TJCXJTZJ</code>）和全称（如 <code>铁甲磁吸镜头支架</code>）。</li>
+  </ul>
+
+  <h3>否词加在哪一层</h3>
+  <ul>
+    <li><b>Campaign 层级</b>（实体 <code>Campaign Negative Keyword</code>）：机型否词 + 按产品否词 + 精准否词，对整个 Campaign 生效。
+      商品投放(PAT) Campaign 整体跳过（PAT 走商品定向，关键词否词无意义）。</li>
+    <li><b>Ad Group 层级</b>（实体 <code>Negative Keyword</code>）：框架表「否定词」列的自带否词，
+      只对 <b>BM(广泛) / PM(词组) / ALL / AUTO(自动)</b> 广告组生效；<b>EM(精准) 与 PAT 广告组不加</b>，避免精准投放被误伤。</li>
+  </ul>
+  <div class="note">同一广告组<b>混投多种匹配类型</b>（例如既有 EM 行又有 BM 行）时，只要包含 BM/PM/ALL/AUTO 之一，该广告组就会加自带否词 —— 不会再因为第一行是 EM 就整组不加。</div>
+
+  <h3>否词冲突自动降级（重要）</h3>
+  <p>如果一个否词会否定掉<b>同一 Campaign 内某个广告组正在主投的词</b>，直接下在 Campaign 层级会把那个广告组自己也否掉。
+  工具会自动检测并降级：</p>
+  <ul>
+    <li>判定：<b>NE</b> 与投放词完全相同；<b>NP</b> 被投放词按词序整词包含（例：否词 <code>esr</code> 会否定 <code>esr privacy screen</code>）。</li>
+    <li>处理：该否词<b>不下到 Campaign 层级</b>，改为 Ad Group 层级，只作用于<b>除被误伤广告组以外</b>的广告组。</li>
+    <li>若整个 Campaign 只有那一个广告组（无处可加），该否词<b>直接跳过</b>。</li>
+    <li>每次降级都会在日志里 ⚠️ 提示「否词「X」会否定掉广告组 Y 正在投放的词，已降级…」，生成后可据此自查。</li>
+  </ul>
+  <p>典型场景：<code>DC_BM</code> 否掉了一批小词，而同 Campaign 里另有广告组专门投这批小词 —— 降级后前者仍被否，后者不受影响。</p>
+  <div class="note">自带否词（「否定词」列）<b>只在同一个广告组内继承</b>，不会顺延给下一个广告组，避免跨组误伤。</div>
+</section>
+
+<!-- ⑬ -->
+<section id="check">
+  <h2>⑬ 上传前自检</h2>
+  <p>生成后自动对齐亚马逊 bulksheet 常见错误项，给出对应错误提示：</p>
+  <ul>
+    <li>Campaign / Ad Group 缺必填（Name、Daily Budget、Default Bid）、纯数字 ID 非法；</li>
+    <li>Start Date 格式（yyyyMMdd）或早于今天；</li>
+    <li>出价超范围（&lt;0.02 或 &gt;1000）、匹配类型非法、关键词文本缺失/重复；</li>
+    <li>Bidding Strategy（竞价策略）非法值警告；</li>
+    <li>PAT 表达式格式、否定词 Match Type 非法、同名 Campaign/Ad Group 重复。</li>
+  </ul>
+  <p><span class="err">❌ Error</span> 阻断导出；<span class="warn">⚠️ Warn</span> 只提示。两类「账号/目录」错误需自行确认（Campaign 已存在会拒、SKU 需可售）。</p>
+</section>
+
+<!-- ⑭ -->
+<section id="reconcile">
+  <h2>⑭ 自动复核报告</h2>
+  <p>导出完成后，日志会逐项<b>对照原始数据</b>核对生成结果，确保一致：</p>
+  <ul>
+    <li>Campaign / 广告组 / 投放词 / 商品投放目标 / SKU 的<b>完整性</b>（有无遗漏）；
+    <li>预算、竞价、竞价策略<b>一致性</b>（期望 vs 生成）；</li>
+    <li>自动投放类型（紧密/宽泛/同类/关联）覆盖；</li>
+    <li>否定词逐 Campaign 核对（期望 vs 生成，有无缺失/多余）；</li>
+    <li>最后给出 <span class="ok">✅ 复核通过</span> 或 <span class="warn">⚠️ 发现 N 处差异</span> 结论。</li>
+  </ul>
+</section>
+
+<!-- ⑮ -->
+<section id="qa">
+  <h2>⑮ 常见问题 / 注意事项</h2>
+  <ul>
+    <li><b>没有 ASIN/SKU 能生成吗？</b> 能。会照常生成框架，但「Product Ad（商品广告）」行没有 SKU，并提示「此版本没有填写 ASIN/SKU，请检查」。上传亚马逊前务必补全 SKU，否则广告无法投放。</li>
+    <li><b>SKU/ASIN 列误填中文备注？</b> 工具会过滤纯中文（只认含字母/数字的内容），避免把笔记当成 SKU 生成垃圾行。</li>
+    <li><b>广告类型明明写了 SP 还报缺失？</b> 多半是多广告组续行未继承 —— 现已修复为自动继承上一行；若仍报，检查该 Campaign 的<b>首个有效行</b>是否漏填。</li>
+    <li><b>改了新品类/新机型？</b> 不用改代码，在映射表加一行（类型=系列/机型，键=Campaign 里的代码，值=标准名）即可。</li>
+    <li><b>第二个广告组没有 SKU？</b> 检查 SKU 列是否被合并单元格 —— 现已自动展开并回填充；若 SKU 只写在首行且未合并，工具也会按「同一 Campaign 内最近一次填写的 SKU」继承。日志会提示继承了多少行。</li>
+    <li><b>BM 关键词全变成精准(exact)？</b> 多为匹配类型列被合并或留空。现已支持合并展开 + 「同广告组上一行 → 广告组名 → Campaign 名」三级推断；请在日志里看「有 N 行未填写匹配类型，已自动补全」的提示，并核对补全结果是否正确。</li>
+    <li><b>18PM 的广告跑出了 18Pro / 18Air 的否词？</b> 已修复：机型否词改为归一化后精确相等（<code>18pm</code> → <code>18promax</code>），不再模糊包含。日志会打印子表名与归一化机型的对照。</li>
+    <li><b>TOS 填 100% 却输出 1？</b> 已修复：优先读取单元格的显示文本（Excel 百分比列存储值 1、显示 100%），同时也兼容 <code>50</code>、<code>50%</code>、<code>0.6</code> 三种写法。</li>
+    <li><b>DC_BM 否的词，把专门投这批词的其他广告组也否了？</b> 已修复：否词冲突自动降级为 Ad Group 层级，只作用于其余广告组（详见 ⑫）。</li>
+    <li><b>表头不同名能识别吗？</b> 能。工具对常用别名做了兼容（如 预算/日预算、广告组/Ad Group、匹配类型/匹配方式、备注/note 等）。</li>
+  </ul>
+</section>
+
+<footer>
+  亚马逊批量广告生成工具 · 使用说明书 ｜ 本说明对应「整理版」工具，离线可用，无需联网
+</footer>
+
+</div>
 </body>
 </html>
